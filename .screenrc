@@ -1,0 +1,15 @@
+#Raghav Kumar Gautam's .screenrc
+
+#change escape char to Ctrl-``
+#escape ^``
+
+# don't display the copyright page
+startup_message off
+
+# visable bell
+vbell_msg "beep"
+
+caption always "%{= gk}%-Lw%{= rW}%50> %n%f* %t %{-}%+Lw%< %= %{= Gk} %H %{= rW} %l %{= Gk} %0c:%s %d/%m %{-}"
+
+#message to be shown when screen session is detached
+pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
