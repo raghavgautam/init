@@ -41,7 +41,7 @@
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
   (let ((options (append oozie-info-options (list job-name))))
-    (net-utils-run-simple
+    (oozie-run-func
      (concat "info:" job-name)
      (concat "** Oozie info ** " job-name)
      oozie-bin
@@ -52,7 +52,7 @@
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
   (let ((options (append oozie-log-options (list job-name))))
-    (net-utils-run-simple
+    (oozie-run-func
      (concat "log:" job-name)
      (concat "** Oozie log ** " job-name)
      oozie-bin
@@ -76,7 +76,7 @@
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (yarn-utils-job-at-point))))
   (let ((options (append yarn-log-options (list (concat "application" job-name)))))
-    (net-utils-run-program
+    (oozie-run-func
      (concat "yarn-log:" job-name)
      (concat (format "** Yarn log ** %s" options))
      "yarn"
