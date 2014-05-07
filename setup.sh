@@ -10,11 +10,11 @@ PKGS="emacs screen tree git"
 if [ -e $SCREENRC_FILE ]; then
     mv $SCREENRC_FILE ~/.screenrc    
     cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys*
-    if [ -d "~/.emacs.d" ]; then
-	rm -rf ~/emacs.d;
-    fi
-    mv $EMACS_INIT ~/.emacs.d
 fi
+
+rm -rf ~/.emacs.d || true
+rm -rf ~/.emacs || true
+mv $EMACS_INIT ~/.emacs.d
 
 if [ $ME="root" ]; then
     if hash yum 2>/dev/null; then
