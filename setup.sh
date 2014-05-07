@@ -4,6 +4,7 @@ echo "BASEDIR=$BASEDIR"
 PUB_KEY_FILE=$BASEDIR/*.pub
 SCREENRC_FILE=$BASEDIR/.screenrc
 ME=`whoami`
+PKGS="emacs screen tree git"
 
 if [ -e $SCREENRC_FILE ]; then
     mv $SCREENRC_FILE ~/.screenrc    
@@ -11,7 +12,13 @@ if [ -e $SCREENRC_FILE ]; then
 fi
 
 if [ $ME="root" ]; then
-    yum -y install emacs screen tree git
+    if hash yum 2>/dev/null; then
+	yum -y install $PKGS
+    elif hash apt-get 2>/dev/null; then
+	apt-get -y install $PKGS
+    else
+	echo "unknown package manager"
+    fi 
 else
     echo "not installing anything"
 fi
