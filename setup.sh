@@ -10,5 +10,5 @@ mv $SCREENRC_FILE ~/.screenrc
 if [ $ME="root" ]; then
     yum -f install emacs screen tree git
 else
-
+    echo "not installing anything"
 fi
