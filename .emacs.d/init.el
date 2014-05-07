@@ -8,7 +8,7 @@
 
 (setq stack-trace-on-error t)
 (require 'net-utils)
-(defun set-oozie-host (host-name)
+(defun oozie-set-host (host-name)
   "Get Oozie info. You can try setting `oozie-info-options'."
   (interactive
    (list (read-from-minibuffer "Oozie host name: " system-name)))
@@ -22,7 +22,7 @@
       (fset 'oozie-run-func 'net-utils-run-program)
     (fset 'oozie-run-func 'net-utils-run-simple)))
 
-(set-oozie-host system-name)
+(oozie-set-host system-name)
 
 (defun oozie-utils-job-at-point ()
   (let ((pt (point)))
