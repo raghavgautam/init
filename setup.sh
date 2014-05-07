@@ -3,12 +3,17 @@ BASEDIR=$(dirname $0)
 echo "BASEDIR=$BASEDIR"
 PUB_KEY_FILE=$BASEDIR/*.pub
 SCREENRC_FILE=$BASEDIR/.screenrc
+EMACS_INIT=$BASEDIR/.emacs.d
 ME=`whoami`
 PKGS="emacs screen tree git"
 
 if [ -e $SCREENRC_FILE ]; then
     mv $SCREENRC_FILE ~/.screenrc    
     cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys*
+    if [ -d "~/.emacs.d" ]; then
+	rm -rf ~/emacs.d;
+    fi
+    mv $EMACS_INIT ~/.emacs.d
 fi
 
 if [ $ME="root" ]; then
