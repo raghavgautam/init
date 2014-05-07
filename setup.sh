@@ -1,5 +1,6 @@
 #!/bin/bash
 BASEDIR=$(dirname $0)
+echo "BASEDIR=$BASEDIR"
 PUB_KEY_FILE=$BASEDIR/*.pub
 SCREENRC_FILE=$BASEDIR/.screenrc
 ME=`whoami`

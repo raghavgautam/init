@@ -13,3 +13,4 @@ caption always "%{= gk}%-Lw%{= rW}%50> %n%f* %t %{-}%+Lw%< %= %{= Gk} %H %{= rW}
 
 #message to be shown when screen session is detached
 pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
