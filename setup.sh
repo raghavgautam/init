@@ -14,7 +14,7 @@ fi
 
 rm -rf ~/.emacs.d || true
 rm -rf ~/.emacs || true
-mv $EMACS_INIT ~/.emacs.d
+cp -R $EMACS_INIT ~/.emacs.d
 
 if [ $ME="root" ]; then
     if hash yum 2>/dev/null; then
