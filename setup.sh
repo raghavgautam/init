@@ -16,7 +16,7 @@ rm -rf ~/.emacs.d || true
 rm -rf ~/.emacs || true
 cp -R $EMACS_INIT ~/.emacs.d
 
-if [ $ME="root" ]; then
+if [ "$ME" == "root" ]; then
     if hash yum 2>/dev/null; then
 	yum -y install $PKGS
     elif hash apt-get 2>/dev/null; then
