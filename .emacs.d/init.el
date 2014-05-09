@@ -81,3 +81,7 @@
      (concat (format "** Yarn log ** %s" options))
      "yarn"
      options)))
+
+(global-set-key "\C-col" 'o-log)
+(global-set-key "\C-coi" 'o-info)
+(global-set-key "\C-cyl" 'y-log)
