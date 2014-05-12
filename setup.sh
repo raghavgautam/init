@@ -10,7 +10,7 @@ PKGS="emacs screen tree git"
 
 if [ ! -f $ME_FILE ]; then
     cp -f $SCREENRC_FILE ~/.screenrc
-    cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys*
+    cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys
     touch $ME_FILE
 fi
 
