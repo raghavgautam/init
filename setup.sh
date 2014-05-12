@@ -9,7 +9,7 @@ ME_FILE=$BASEDIR/$ME
 PKGS="emacs screen tree git"
 
 if [ ! -f $ME_FILE ]; then
-    mv $SCREENRC_FILE ~/.screenrc    
+    cp -f $SCREENRC_FILE ~/.screenrc
     cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys*
     touch $ME_FILE
 fi
