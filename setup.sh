@@ -5,11 +5,13 @@ PUB_KEY_FILE=$BASEDIR/*.pub
 SCREENRC_FILE=$BASEDIR/.screenrc
 EMACS_INIT=$BASEDIR/.emacs.d
 ME=`whoami`
+ME_FILE=$BASEDIR/$ME
 PKGS="emacs screen tree git"
 
-if [ -e $SCREENRC_FILE ]; then
+if [ ! -f $ME_FILE ]; then
     mv $SCREENRC_FILE ~/.screenrc    
     cat $PUB_KEY_FILE >> ~/.ssh/authorized_keys*
+    touch $ME_FILE
 fi
 
 rm -rf ~/.emacs.d || true
