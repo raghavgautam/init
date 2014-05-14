@@ -43,7 +43,7 @@
   (let ((options (append oozie-info-options (list job-name))))
     (oozie-run-func
      (concat "oozie-info")
-     (concat "** Oozie info ** " job-name)
+     (format "oozie %s" (mapconcat 'identity options " "))
      oozie-bin
      options)))
 
@@ -54,7 +54,7 @@
   (let ((options (append oozie-log-options (list job-name))))
     (oozie-run-func
      (concat "oozie-log")
-     (concat "** Oozie log ** " job-name)
+     (format "oozie %s" (mapconcat 'identity options " "))
      oozie-bin
      options)))
 
