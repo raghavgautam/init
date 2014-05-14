@@ -78,7 +78,7 @@
   (let ((options (append yarn-log-options (list (concat "application" job-name)))))
     (oozie-run-func
      (concat "yarn-log")
-     (concat (format "** Yarn log ** %s" options))
+     (format "yarn %s" (mapconcat 'identity options " "))
      "yarn"
      options)))
 
