@@ -18,6 +18,8 @@
 	oozie-job-options (list "job" "-oozie" oozie-url)
 	oozie-info-options (append oozie-job-options (list "-info"))
 	oozie-log-options (append oozie-job-options (list "-log")))
+  (if (equal system-type "windows-nt")
+      (setq oozie-bin (car (file-expand-wildcards "d:\hdp\oozie*\oozie-win-distro\bin\oozie"))))
   (if (fboundp 'net-utils-run-program)
       (fset 'oozie-run-func 'net-utils-run-program)
     (fset 'oozie-run-func 'net-utils-run-simple)))
