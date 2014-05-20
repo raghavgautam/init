@@ -96,7 +96,16 @@
      "yarn"
      options)))
 
+(defun write-in-tmp (file-name)
+  "Write the buffer in /tmp/ dir"
+  (interactive
+   (list
+    (read-from-minibuffer "Write to file: " (concat "/tmp/" (replace-regexp-in-string "*" "" (buffer-name)) ".txt"))))
+  (write-file file-name))
+
 (global-set-key "\C-col" 'o-log)
 (global-set-key "\C-coi" 'o-info)
 (global-set-key "\C-cos" 'oozie-set-host)
 (global-set-key "\C-cyl" 'y-log)
+(global-set-key "\C-cr" 'write-in-tmp)
+;;(find-file (make-temp-file "foo"))
