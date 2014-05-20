@@ -104,6 +104,7 @@
   (write-file file-name))
 
 (global-set-key "\C-col" 'o-log)
+(global-set-key "\C-cod" 'o-def)
 (global-set-key "\C-coi" 'o-info)
 (global-set-key "\C-cos" 'oozie-set-host)
 (global-set-key "\C-cyl" 'y-log)
