@@ -17,6 +17,7 @@
 	oozie-bin "/usr/bin/oozie"
 	oozie-job-options (list "job" "-oozie" oozie-url)
 	oozie-info-options (append oozie-job-options (list "-info"))
+	oozie-def-options (append oozie-job-options (list "-definition"))
 	oozie-log-options (append oozie-job-options (list "-log")))
   (if (equal system-type "windows-nt")
       (setq oozie-bin (car (file-expand-wildcards "d:\hdp\oozie*\oozie-win-distro\bin\oozie"))))
@@ -56,6 +57,17 @@
   (let ((options (append oozie-log-options (list job-name))))
     (oozie-run-func
      (concat "oozie-log")
+     (format "oozie %s" (mapconcat 'identity options " "))
+     oozie-bin
+     options)))
+
+(defun o-def (job-name)
+  "Get Definition of Oozie job. You can try setting `oozie-def-options'."
+  (interactive
+   (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
+  (let ((options (append oozie-def-options (list job-name))))
+    (oozie-run-func
+     (concat "oozie-def")
      (format "oozie %s" (mapconcat 'identity options " "))
      oozie-bin
      options)))
