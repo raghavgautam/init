@@ -56,7 +56,7 @@
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
   (let ((options (append oozie-log-options (list job-name))))
     (oozie-run-func
-     (concat "oozie-log")
+     (concat "oozie-logs")
      (format "oozie %s" (mapconcat 'identity options " "))
      oozie-bin
      options)))
@@ -91,7 +91,7 @@
    (list (read-from-minibuffer "Oozie job name: " (yarn-utils-job-at-point))))
   (let ((options (append yarn-log-options (list (concat "application" job-name)))))
     (oozie-run-func
-     (concat "yarn-log")
+     (concat "yarn-logs")
      (format "yarn %s" (mapconcat 'identity options " "))
      "yarn"
      options)))
