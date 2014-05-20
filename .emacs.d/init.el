@@ -103,10 +103,21 @@
     (read-from-minibuffer "Write to file: " (concat "/tmp/" (replace-regexp-in-string "*" "" (buffer-name)) ".txt"))))
   (write-file file-name))
 
+(defun collect-text (beg end &optional region)
+  "Collect selected text in a *collect* buffer"
+  (interactive (list (mark) (point)
+		     (prefix-numeric-value current-prefix-arg)))
+  (append-to-buffer "*collect*" beg end)
+  (message "Copied the selected text to buffer *collect*")
+  (indicate-copied-region))
+
 (global-set-key "\C-col" 'o-log)
 (global-set-key "\C-cod" 'o-def)
 (global-set-key "\C-coi" 'o-info)
 (global-set-key "\C-cos" 'oozie-set-host)
 (global-set-key "\C-cyl" 'y-log)
+(global-set-key "\C-cc" 'collect-text)
 (global-set-key "\C-cr" 'write-in-tmp)
 ;;(find-file (make-temp-file "foo"))
+
+
