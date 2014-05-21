@@ -6,7 +6,7 @@
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
 (setq dired-auto-revert-buffer t)
 
-(setq stack-trace-on-error t)
+(setq stack-trace-on-error nil) ;;it becomes irritating
 (require 'net-utils)
 (defun oozie-set-host (host-name)
   "Get Oozie info. You can try setting `oozie-info-options'."
