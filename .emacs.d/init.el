@@ -43,10 +43,13 @@
   "Get Oozie info. You can try setting `oozie-info-options'."
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
-  (let ((options (append oozie-info-options (list job-name))))
+  (let* ((options (append oozie-info-options (list job-name)))
+	 (buf-name (concat "oozie-info"))
+	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
+    (switch-to-buffer buf-name)
     (oozie-run-func
-     (concat "oozie-info")
-     (format "oozie %s" (mapconcat 'identity options " "))
+     buf-name
+     top-line
      oozie-bin
      options)))
 
@@ -54,10 +57,13 @@
   "Get Oozie log. You can try setting `oozie-log-options'."
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
-  (let ((options (append oozie-log-options (list job-name))))
+  (let* ((options (append oozie-log-options (list job-name)))
+	 (buf-name (concat "oozie-log"))
+	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
+    (switch-to-buffer buf-name)
     (oozie-run-func
-     (concat "oozie-logs")
-     (format "oozie %s" (mapconcat 'identity options " "))
+     buf-name
+     top-line
      oozie-bin
      options)))
 
@@ -65,10 +71,13 @@
   "Get Definition of Oozie job. You can try setting `oozie-def-options'."
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (oozie-utils-job-at-point))))
-  (let ((options (append oozie-def-options (list job-name))))
+  (let* ((options (append oozie-def-options (list job-name)))
+	 (buf-name (concat "oozie-def"))
+	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
+    (switch-to-buffer buf-name)
     (oozie-run-func
-     (concat "oozie-def")
-     (format "oozie %s" (mapconcat 'identity options " "))
+     buf-name
+     top-line
      oozie-bin
      options)))
 
@@ -89,11 +98,14 @@
   "Get yarn log."
   (interactive
    (list (read-from-minibuffer "Oozie job name: " (yarn-utils-job-at-point))))
-  (let ((options (append yarn-log-options (list (concat "application" job-name)))))
+  (let* ((options (append yarn-log-options (list (concat "application" job-name))))
+	 (buf-name (concat "yarn-logs"))
+	 (yarn-bin "yarn")
+	 (top-line (format "%s %s" yarn-bin (mapconcat 'identity options " "))))
     (oozie-run-func
-     (concat "yarn-logs")
-     (format "yarn %s" (mapconcat 'identity options " "))
-     "yarn"
+     buf-name
+     top-line
+     yarn-bin
      options)))
 
 (defun write-in-tmp (file-name)
