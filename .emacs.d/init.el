@@ -46,7 +46,7 @@
   (let* ((options (append oozie-info-options (list job-name)))
 	 (buf-name (concat "oozie-info"))
 	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
-    (switch-to-buffer buf-name)
+    (switch-to-buffer (concat "*" buf-name "*"))
     (oozie-run-func
      buf-name
      top-line
@@ -60,7 +60,7 @@
   (let* ((options (append oozie-log-options (list job-name)))
 	 (buf-name (concat "oozie-log"))
 	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
-    (switch-to-buffer buf-name)
+    (switch-to-buffer (concat "*" buf-name "*"))
     (oozie-run-func
      buf-name
      top-line
@@ -74,7 +74,7 @@
   (let* ((options (append oozie-def-options (list job-name)))
 	 (buf-name (concat "oozie-def"))
 	 (top-line (format "%s %s" oozie-bin (mapconcat 'identity options " "))))
-    (switch-to-buffer buf-name)
+    (switch-to-buffer (concat "*" buf-name "*"))
     (oozie-run-func
      buf-name
      top-line
