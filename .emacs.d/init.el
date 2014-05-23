@@ -132,4 +132,19 @@
 (global-set-key "\C-cr" 'write-in-tmp)
 ;;(find-file (make-temp-file "foo"))
 
+(defun rename-buffer-maybe-file (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+	(filename (buffer-file-name)))
+    (if (get-buffer new-name)
+	(message "A buffer named '%s' already exists!" new-name)
+      (progn
+	(cond (filename
+	       (progn (rename-file name new-name 1)
+		      (rename-buffer new-name)
+		      (set-visited-file-name new-name)
+		      (set-buffer-modified-p nil)))
+	      (t (rename-buffer (concat "*" new-name "*"))))))))
 
+(global-set-key [f2] 'rename-buffer-maybe-file)
