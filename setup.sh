@@ -24,7 +24,7 @@ if [ "$ME" == "root" ]; then
     elif hash apt-get 2>/dev/null; then
 	apt-get -y install $PKGS
     elif hash zypper 2>/dev/null; then
-	zypper -y install $PKGS
+	zypper -n install $PKGS
     else
 	echo "unknown package manager"
     fi 
