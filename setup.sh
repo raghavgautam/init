@@ -24,6 +24,9 @@ if [ "$ME" == "root" ]; then
     elif hash apt-get 2>/dev/null; then
 	apt-get -y install $PKGS
     elif hash zypper 2>/dev/null; then
+	if [ -f "/etc/SuSE-release" ]; then
+	    zypper addrepo -n -f http://download.opensuse.org/distribution/11.4/repo/oss/ oss
+	fi
 	zypper -n install $PKGS
     else
 	echo "unknown package manager"
