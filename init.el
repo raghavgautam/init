@@ -2,6 +2,13 @@
       ido-everywhere t)
 (ido-mode 1)
 (put 'narrow-to-region 'disabled nil)
+
+(when (require 'package nil 'noerror)
+  (message "loading package manager stuff")
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+
+
 (setq auto-mode-alist (cons '("\\.txt$" . auto-revert-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
 (setq dired-auto-revert-buffer t)
