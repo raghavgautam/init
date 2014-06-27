@@ -201,3 +201,6 @@
 (defun search-logtime ()
   (interactive
    (isearch-forward log-timestamp)))
+
+(require 'backport)
+(require 'fr-mode)
