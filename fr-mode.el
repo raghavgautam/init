@@ -100,7 +100,7 @@
 
 ;;;###autoload
 (define-minor-mode fr-mode
-  "Get your foos in the right places."
+  "Simplifying analysis of hadoop and oozie jobs."
   :lighter " fr"
   :keymap fr-map)
 
