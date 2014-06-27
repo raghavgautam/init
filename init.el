@@ -155,3 +155,49 @@
 	      (t (rename-buffer (concat "*" new-name "*"))))))))
 
 (global-set-key [f2] 'rename-buffer-maybe-file)
+
+;;(nslookup-host "74.125.239.40")
+
+
+(defun fetch-json (url)
+  (with-current-buffer (url-retrieve-synchronously url)
+   ; there's probably a better way of stripping the headers
+    (search-forward "\n\n")
+    (delete-region (point-min) (point))
+    (buffer-string)))
+
+;(cdr (assoc 'result (json-read-from-string (fetch-json (concat "http://localhost:9000/test?param=" (url-hexify-string "ls -al ~/"))))))
+
+
+(defun chomp (str)
+  "Chomp leading and tailing whitespace from STR."
+  (replace-regexp-in-string (rx (or (: bos (* (any " \t\n")))
+				    (: (* (any " \t\n")) eos)))
+			    ""
+			    str))
+(defun pick-time-at-point ()
+  (let ((pt (point)))
+    (chomp
+    (buffer-substring-no-properties
+     (save-excursion
+       (skip-chars-backward "-_: 0-9")
+       (point))
+     (save-excursion
+       (skip-chars-forward "-_: 0-9")
+       ;;(skip-chars-backward "." pt)
+       (point))
+     ))
+    ))
+    
+;; (pick-time "INFO 2014-06-13 12:30:34,003 tahoth")
+(defvar log-timestamp nil)
+
+(defun pick-logtime (log-time)
+  "Pick timestamp from log."
+  (interactive
+   (list (read-from-minibuffer "Picking time: " (pick-time-at-point))))
+  (setq log-timestamp log-time))
+
+(defun search-logtime ()
+  (interactive
+   (isearch-forward log-timestamp)))
