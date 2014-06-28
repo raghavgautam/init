@@ -16,6 +16,8 @@
 (defvar-local setup-buf "setup" "Output of setup command")
 (defvar-local setup-cmd nil "Output of setup command")
 
+(defvar fr-fail-str "]) FAILED" "String for searching failuers")
+
 ;(setq ac-delay 0.1)
 (defun cmd-weave (&rest cmd-parts)
   "Weave parts of command together"
@@ -85,17 +87,27 @@
    (list (read-from-minibuffer "Command: " setup-cmd)))
   (fr-run-cmd command setup-buf))
 
+(defun fr-next-failure ()
+  "Takes you to the next failure."
+  (interactive)
+  (search-forward fr-fail-str))
+
+(defun fr-prev-failure ()
+  "Takes you to the previous failure."
+  (interactive)
+  (search-backward fr-fail-str))
+
 ;;(fr-custom-run "find .")
 
 (defvar fr-map (make-sparse-keymap) "fr-mode keymap")
-(define-key fr-map (kbd "C-c f") 'insert-foo)
+(define-key fr-map (kbd "C-c n") 'fr-next-failure)
+(define-key fr-map (kbd "C-c p") 'fr-prev-failure)
 (define-key fr-map (kbd "C-c u") 'fr-custom-run)
 (define-key fr-map (kbd "C-c i") 'fr-oozie-info)
 (define-key fr-map (kbd "C-c l") 'fr-oozie-log)
 (define-key fr-map (kbd "C-c s") 'fr-setup)
 (define-key fr-map (kbd "C-c v") 'fr-set-vars)
 (define-key fr-map (kbd "C-c d") 'load-file)
-
 ;;;###autoload
 (define-minor-mode fr-mode
   "Simplifying analysis of hadoop and oozie jobs."
