@@ -54,8 +54,6 @@
 	ooz-log-cmd (cmd-weave ooz-job-cmd "-log"))
   (message "var setting done."))
 
-(fr-set-vars (gethostname))
-
 (defun fr-custom-run (command)
   (interactive
    (list (read-from-minibuffer "Command: " "ls -a")))
@@ -106,5 +104,8 @@
 
 ;;;###autoload
 ;;(add-hook 'text-mode-hook 'foo-mode)
+
+;;(setq fr-mode-hook nil)
+;;(add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
 (provide 'fr-mode)
