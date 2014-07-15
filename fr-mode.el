@@ -42,7 +42,7 @@
   
 (defun gethostname ()
   "get hostname for current buffer"
-  (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output "hostname")))
+  (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output "hostname -f")))
 
 (defun fr-set-vars (host)
   (interactive
