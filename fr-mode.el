@@ -42,7 +42,7 @@
   
 (defun gethostname ()
   "get hostname for current buffer"
-  (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output "hostname -f")))
+  (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output (cmd-weave "hostname" "-f"))))
 
 (defun fr-set-vars (host)
   (interactive
@@ -111,7 +111,7 @@
 ;;;###autoload
 (define-minor-mode fr-mode
   "Simplifying analysis of hadoop and oozie jobs."
-  :lighter " fr"
+  :lighter " FR"
   :keymap fr-map)
 
 ;;;###autoload
