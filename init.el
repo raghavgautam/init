@@ -202,5 +202,7 @@
   (interactive
    (isearch-forward log-timestamp)))
 
+(add-to-list 'load-path "~/init/")
+(add-to-list 'load-path "~/.emacs.d/")
 (require 'backport)
 (require 'fr-mode)
