@@ -29,7 +29,7 @@
     (shell-command command buffer)
     (switch-to-buffer buffer)
     (delete-other-windows)
-    (fr-mode)
+    (fr-mode t)
     (fr-set-vars host)))
 
 (defun fr-run-cmd-get-output (command)
