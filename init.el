@@ -203,6 +203,7 @@
    (isearch-forward log-timestamp)))
 
 (add-to-list 'load-path "~/init/")
-(add-to-list 'load-path "~/.emacs.d/")
+(add-to-list 'load-path "~/init/lisp")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'backport)
 (require 'fr-mode)
