@@ -56,7 +56,9 @@
 
 (defun fr-run-cmd-get-output (command)
   "Run the COMMAND get string output"
-  (fr-run-cmd command fr-tmp-buf)
+  (shell-command command fr-tmp-buf)
+  (switch-to-buffer fr-tmp-buf)
+  (delete-other-windows)
   (with-current-buffer fr-tmp-buf
     (let ((output (buffer-string)))
       (kill-buffer)
@@ -191,6 +193,6 @@
 
 ;;(setq fr-mode-hook nil)
 (add-hook 'fr-mode-hook 'read-only-mode)
-;;(add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
+(add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
 (provide 'fr-mode)
