@@ -190,6 +190,7 @@
 ;;(add-hook 'text-mode-hook 'foo-mode)
 
 ;;(setq fr-mode-hook nil)
+(add-hook 'fr-mode-hook 'read-only-mode)
 ;;(add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
 (provide 'fr-mode)
