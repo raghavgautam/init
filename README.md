@@ -1,3 +1,3 @@
 init
 ====
-My setup configuration and scripts.
+My Emacs configuration and some setup scripts.
