@@ -34,12 +34,6 @@
 (defvar-local setup-buf "setup" "Output of setup command")
 (defvar-local setup-cmd nil "Output of setup command")
 
-(defvar fr-begin-str "Testing going to start for" "String for searching start of test")
-(defvar fr-end-str "Testing going to end for" "String for searching end of test")
-(defvar fr-fail-str "]) FAILED" "String for searching failuers")
-(defvar fr-success-str "]) SUCCESS" "String for searching success")
-(defvar fr-skip-str "]) SKIPPED" "String for searching skipped")
-
 ;(setq ac-delay 0.1)
 (defun cmd-weave (&rest cmd-parts)
   "Weave parts of command together"
@@ -112,71 +106,11 @@
    (list (read-from-minibuffer "Command: " setup-cmd)))
   (fr-run-cmd command setup-buf))
 
-(defun fr-next-begin-test ()
-  "Takes you to the begining of the next test."
-  (interactive)
-  (search-forward fr-begin-str))
-
-(defun fr-prev-begin-test ()
-  "Takes you to the end of the previous test."
-  (interactive)
-  (search-backward fr-begin-str))
-
-(defun fr-next-end-test ()
-  "Takes you to the ending of the next test."
-  (interactive)
-  (search-forward fr-end-str))
-
-(defun fr-prev-end-test ()
-  "Takes you to the end of the previous test."
-  (interactive)
-  (search-backward fr-end-str))
-
-(defun fr-next-failure ()
-  "Takes you to the next failure."
-  (interactive)
-  (search-forward fr-fail-str))
-
-(defun fr-prev-failure ()
-  "Takes you to the previous failure."
-  (interactive)
-  (search-backward fr-fail-str))
-
-(defun fr-next-success ()
-  "Takes you to the next success."
-  (interactive)
-  (search-forward fr-success-str))
-
-(defun fr-prev-success ()
-  "Takes you to the previous success."
-  (interactive)
-  (search-backward fr-success-str))
-
-(defun fr-next-skip ()
-  "Takes you to the next skip."
-  (interactive)
-  (search-forward fr-skip-str))
-
-(defun fr-prev-skip ()
-  "Takes you to the previous skip."
-  (interactive)
-  (search-backward fr-skip-str))
-
 ;;(fr-custom-run "find .")
 
 (defvar fr-map (make-sparse-keymap) "fr-mode keymap")
 (define-key fr-map (kbd "C-c n") nil)
 (define-key fr-map (kbd "C-c p") nil)
-(define-key fr-map (kbd "M-n M-b") 'fr-next-begin-test)
-(define-key fr-map (kbd "M-p M-b") 'fr-prev-begin-test)
-(define-key fr-map (kbd "M-n M-e") 'fr-next-end-test)
-(define-key fr-map (kbd "M-p M-e") 'fr-prev-end-test)
-(define-key fr-map (kbd "M-n M-s") 'fr-next-success)
-(define-key fr-map (kbd "M-p M-s") 'fr-prev-success)
-(define-key fr-map (kbd "M-n M-f") 'fr-next-failure)
-(define-key fr-map (kbd "M-p M-f") 'fr-prev-failure)
-(define-key fr-map (kbd "M-n M-k") 'fr-next-skip)
-(define-key fr-map (kbd "M-p M-k") 'fr-prev-skip)
 (define-key fr-map (kbd "C-c u") 'fr-custom-run)
 (define-key fr-map (kbd "C-c i") 'fr-oozie-info)
 (define-key fr-map (kbd "C-c l") 'fr-oozie-log)
@@ -193,7 +127,8 @@
 ;;(add-hook 'text-mode-hook 'foo-mode)
 
 ;;(setq fr-mode-hook nil)
-(add-hook 'fr-mode-hook 'read-only-mode)
+(require 'skim-mode)
+(add-hook 'fr-mode-hook 'read-only-mode 'skim-mode)
 (add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
 (provide 'fr-mode)
