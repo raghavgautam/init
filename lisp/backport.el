@@ -43,6 +43,6 @@ buffer-local wherever it is set."
 (if (not (fboundp 'read-only-mode))
     (defun read-only-mode ()
       "make the buffer readonly"
-      (setq buffer-read-only t)))
+      (setq buffer-read-only (not buffer-read-only))))
 
 (provide 'backport)
