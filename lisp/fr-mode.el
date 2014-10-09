@@ -66,7 +66,8 @@
   
 (defun gethostname ()
   "get hostname for current buffer"
-  (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output (cmd-weave "hostname" "-f"))))
+  (if (string= system-type "windows-nt") (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output (cmd-weave "hostname")))
+    (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output (cmd-weave "hostname" "-f")))))
 
 (defun fr-set-vars (host)
   (interactive
