@@ -74,4 +74,61 @@
   :lighter " SKIM"
   :keymap skim-map)
 
+(defun skim-annotate-start-end ()
+  "put fringe marker at start and end of test"
+  (interactive)
+  (remove-overlays)
+  (let ((skim-start-endregex
+	 (regexp-opt
+	  '("Testing going to start for"
+	    "Testing going to end for")
+	  t)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward skim-start-endregex nil t)
+	(let ((overlay (make-overlay (- (point) 5) (point))))
+	  (overlay-put overlay 'before-string (propertize "A"
+							  'display '(left-fringe left-triangle))))
+	(let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+	  (overlay-put overlay 'face 'hi-blue))))))
+
+(defun skim-annotate-failed ()
+  "put fringe marker on failed tests"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward (regexp-opt '("]) FAILED" "]) SKIPPED")) nil t)
+      (let ((overlay (make-overlay (- (point) 7) (point))))
+        (overlay-put overlay 'face 'hi-yellow)
+	))))
+
+(defun skim-annotate-more ()
+  "put fringe marker on failed tests"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward (regexp-opt '("Request Url:")) nil t)
+      (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+	(overlay-put overlay 'face 'hi-green-b)))))
+
+(defun skim-annotate-extra ()
+  "put fringe marker on failed tests"
+  (interactive)
+  (let ((keywords '("Invalid Workflow server or port" "HTTP ERROR 500")))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward (regexp-opt keywords) nil t)
+	(let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
+	  (overlay-put overlay 'face 'hi-red-b))))))
+
+(defun skim-annotate-all ()
+  "apply all the skim annotations on the log files"
+  (interactive)
+  (skim-annotate-start-end)
+  (skim-annotate-failed)
+  (skim-annotate-more)
+  (skim-annotate-extra))
+
+
 (provide 'skim-mode)
+
