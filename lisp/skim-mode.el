@@ -107,14 +107,27 @@
   (interactive)
   (save-excursion
     (goto-char (point-min))
-    (while (re-search-forward (regexp-opt '("Request Url:")) nil t)
+    (while
+	(re-search-forward
+	 (regexp-opt
+	  '("Request Url:"
+	    "Submitting cluster:"
+	    "Submitting feed:"
+	    "Submitting process:"
+	    )) nil t)
       (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
 	(overlay-put overlay 'face 'hi-green-b)))))
 
 (defun skim-annotate-extra ()
   "put fringe marker on failed tests"
   (interactive)
-  (let ((keywords '("Invalid Workflow server or port" "HTTP ERROR 500")))
+  (let ((keywords
+	 '(
+	   ;;associated with internal server error
+	   "Invalid Workflow server or port"
+	   "HTTP ERROR 500"
+	    ;;associated with internal server error
+	   "org.mortbay.thread.QueuedThreadPool$PoolThread.run")))
     (save-excursion
       (goto-char (point-min))
       (while (re-search-forward (regexp-opt keywords) nil t)
