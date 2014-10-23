@@ -142,6 +142,17 @@
   (skim-annotate-more)
   (skim-annotate-extra))
 
+(defun skim-select-record ()
+  "put fringe marker on failed tests"
+  (interactive)
+  (let* ((record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)"))
+    (re-search-backward record-regex)
+    (transient-mark-mode 1)                                                                                                                                                        
+    (set-mark (point))                                                                                                                                                             
+    (re-search-forward record-regex)
+    (re-search-forward record-regex)
+    (move-beginning-of-line nil)
+    ))
 
 (provide 'skim-mode)
 
