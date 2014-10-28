@@ -68,8 +68,8 @@
    (list (read-from-minibuffer "Hostname: " (gethostname))))
   (setq setup-cmd "curl -L https://github.com/raghavgautam/init/archive/master.zip -o /tmp/`whoami`.zip; unzip -o -d /tmp/`whoami`/ /tmp/`whoami`.zip; chmod -R 777 /tmp/`whoami`/; mkdir ~/.emacs.d/; rm -rf ~/.emacs.d/lisp; mv /tmp/`whoami`/init-master/* /tmp/`whoami`/init-master/.[^.]* ~/.emacs.d/; ~/.emacs.d/setup.sh")
   (setq host-name host
-	;;oozie-bin (file-expand-wildcards "d:/hdp/oozie-*/oozie-win-distro/bin/oozie")
-	ooz-bin "oozie"
+	oozie-bin (or (car (file-expand-wildcards "d:/hdp/oozie-*/oozie-win-distro/bin/oozie"))
+		      "oozie")
 	ooz-url (concat "http://" host-name ":11000/oozie")
 	ooz-job-cmd (cmd-weave ooz-bin "job" "-oozie" ooz-url)
 	ooz-inf-cmd (cmd-weave ooz-job-cmd "-info")
