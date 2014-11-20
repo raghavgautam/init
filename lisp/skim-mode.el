@@ -55,25 +55,6 @@
   (interactive)
   (search-backward skim-skip-str))
 
-
-(defvar skim-map (make-sparse-keymap) "skim-mode keymap")
-
-(define-key skim-map (kbd "M-n M-b") 'skim-next-begin-test)
-(define-key skim-map (kbd "M-p M-b") 'skim-prev-begin-test)
-(define-key skim-map (kbd "M-n M-e") 'skim-next-end-test)
-(define-key skim-map (kbd "M-p M-e") 'skim-prev-end-test)
-(define-key skim-map (kbd "M-n M-s") 'skim-next-success)
-(define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
-(define-key skim-map (kbd "M-n M-f") 'skim-next-failure)
-(define-key skim-map (kbd "M-p M-f") 'skim-prev-failure)
-(define-key skim-map (kbd "M-n M-k") 'skim-next-skip)
-(define-key skim-map (kbd "M-p M-k") 'skim-prev-skip)
-
-(define-minor-mode skim-mode
-  "Simplifying skimming of logs."
-  :lighter " SKIM"
-  :keymap skim-map)
-
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
   (interactive)
@@ -143,17 +124,67 @@
   (skim-annotate-more)
   (skim-annotate-extra))
 
+(setq skim-record-regex
+      "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)")
+
 (defun skim-select-record ()
   "put fringe marker on failed tests"
   (interactive)
-  (let* ((record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)"))
-    (re-search-backward record-regex)
+  (progn
+    (re-search-backward skim-record-regex)
     (transient-mark-mode 1)                                                                                                                                                        
     (set-mark (point))                                                                                                                                                             
-    (re-search-forward record-regex)
-    (re-search-forward record-regex)
+    (re-search-forward skim-record-regex)
+    (re-search-forward skim-record-regex)
     (move-beginning-of-line nil)
+    ;;(print (concat "test " (number-to-string (mark)) " " (number-to-string (point))))
     ))
+
+(defun skim-select-test ()
+  "put fringe marker on failed tests"
+  (interactive)
+  (progn
+    (re-search-backward skim-begin-str)
+    (move-beginning-of-line nil)
+    (transient-mark-mode 1)                                                                                                                                                        
+    (set-mark (point))                                                                                                                                                             
+    (re-search-forward skim-end-str)
+    (move-beginning-of-line nil)
+    (forward-line)
+    ))
+
+(defun skim-prev-record ()
+  "go to next record"
+  (interactive)
+  (re-search-backward skim-record-regex))
+
+(defun skim-next-record ()
+  "go to previous log record"
+  (interactive)
+  (re-search-forward skim-record-regex nil t 2)
+  (move-beginning-of-line nil))
+
+(defvar skim-map (make-sparse-keymap) "skim-mode keymap")
+
+(define-key skim-map (kbd "M-n M-b") 'skim-next-begin-test)
+(define-key skim-map (kbd "M-p M-b") 'skim-prev-begin-test)
+(define-key skim-map (kbd "M-n M-e") 'skim-next-end-test)
+(define-key skim-map (kbd "M-p M-e") 'skim-prev-end-test)
+(define-key skim-map (kbd "M-n M-s") 'skim-next-success)
+(define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
+(define-key skim-map (kbd "M-n M-f") 'skim-next-failure)
+(define-key skim-map (kbd "M-p M-f") 'skim-prev-failure)
+(define-key skim-map (kbd "M-n M-k") 'skim-next-skip)
+(define-key skim-map (kbd "M-p M-k") 'skim-prev-skip)
+
+(define-key skim-map (kbd "M-n M-r") 'skim-next-record)
+(define-key skim-map (kbd "M-p M-r") 'skim-prev-record)
+
+
+(define-minor-mode skim-mode
+  "Simplifying skimming of logs."
+  :lighter " SKIM"
+  :keymap skim-map)
 
 (provide 'skim-mode)
 
