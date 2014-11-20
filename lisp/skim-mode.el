@@ -137,6 +137,7 @@
 (defun skim-annotate-all ()
   "apply all the skim annotations on the log files"
   (interactive)
+  (require 'hi-lock)
   (skim-annotate-start-end)
   (skim-annotate-failed)
   (skim-annotate-more)
