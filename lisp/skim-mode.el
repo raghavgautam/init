@@ -28,12 +28,12 @@
 (defun skim-next-failure ()
   "Takes you to the next failure."
   (interactive)
-  (search-forward skim-fail-str))
+  (re-search-forward (regexp-opt (list skim-fail-str skim-skip-str))))
 
 (defun skim-prev-failure ()
   "Takes you to the previous failure."
   (interactive)
-  (search-backward skim-fail-str))
+  (re-search-backward (regexp-opt (list skim-fail-str skim-skip-str))))
 
 (defun skim-next-success ()
   "Takes you to the next success."
@@ -44,16 +44,6 @@
   "Takes you to the previous success."
   (interactive)
   (search-backward skim-success-str))
-
-(defun skim-next-skip ()
-  "Takes you to the next skip."
-  (interactive)
-  (search-forward skim-skip-str))
-
-(defun skim-prev-skip ()
-  "Takes you to the previous skip."
-  (interactive)
-  (search-backward skim-skip-str))
 
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
@@ -173,9 +163,10 @@
 (define-key skim-map (kbd "M-n M-s") 'skim-next-success)
 (define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
 (define-key skim-map (kbd "M-n M-f") 'skim-next-failure)
+(define-key skim-map (kbd "TAB") 'skim-next-failure)
 (define-key skim-map (kbd "M-p M-f") 'skim-prev-failure)
-(define-key skim-map (kbd "M-n M-k") 'skim-next-skip)
-(define-key skim-map (kbd "M-p M-k") 'skim-prev-skip)
+(define-key skim-map (kbd "<backtab>") 'skim-prev-failure)
+
 
 (define-key skim-map (kbd "M-n M-r") 'skim-next-record)
 (define-key skim-map (kbd "M-p M-r") 'skim-prev-record)
