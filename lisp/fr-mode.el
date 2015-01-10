@@ -34,6 +34,9 @@
 (defvar-local setup-buf "setup" "Output of setup command")
 (defvar-local setup-cmd nil "Output of setup command")
 
+(defvar-local yarn-inf-buf "yarn-info" "Yarn info buffer")
+(defvar-local yarn-inf-cmd nil "yarn info command")
+
 ;(setq ac-delay 0.1)
 (defun cmd-weave (&rest cmd-parts)
   "Weave parts of command together"
@@ -107,6 +110,57 @@
    (list (read-from-minibuffer "Command: " setup-cmd)))
   (fr-run-cmd command setup-buf))
 
+(when (bound-and-true-p laptop)
+  (require 'projectile))
+
+(defun fr-find-file-in-project (hint)
+  (let ((file (projectile-completing-read
+	       "Find file: "
+	       (projectile-current-project-files)
+	       hint)))
+    (with-current-buffer (find-file (expand-file-name file (projectile-project-root)))
+      (fr-mode))))
+
+(defun fr-oozie-handler (job_id)
+  (let* ((oozie-op (ido-completing-read "Do you wish info or log for this oozie job ?" (list "info" "log") nil t))
+	 (command
+	  (read-from-minibuffer
+	   "Constructed command: "
+	   (cmd-weave ooz-job-cmd (concat "-" oozie-op) job_id))))
+    (fr-run-cmd command
+		(if (string-equal oozie-op "log")
+		    ooz-log-buf
+		  ooz-inf-buf))))
+
+(defun fr-yarn-handler (job_id)
+  (let* ((command
+	  (read-from-minibuffer
+	   "Constructed command: "
+	   (cmd-weave "yarn logs -applicationId" job_id))))
+    (fr-run-cmd command yarn-inf-buf)))
+
+(defun fr-action-handler (x)
+  (let* ((content (button-get x 'content))
+	 (job_id  (replace-regexp-in-string "job" "application" content)))
+    (cond ((bound-and-true-p laptop)
+	   (fr-find-file-in-project (car (split-string job_id "@"))))
+	  ((string-match-p "oozie" job_id)
+	   (fr-oozie-handler job_id))
+	  ((string-match-p "application" job_id)
+	   (fr-yarn-handler job_id))
+	  (t (message "Don't know how to handle %s" job_id)))))
+
+(defun add-handler-for-regex (regex handler)
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward regex nil t)
+	(make-button ;;or make-button/make-text-button
+	 (match-beginning 0)
+	 (match-end 0)
+	 'action handler
+         'follow-link t
+	 'content (match-string 0)))))
+
 ;;(fr-custom-run "find .")
 
 (defvar fr-map (make-sparse-keymap) "fr-mode keymap")
@@ -129,7 +183,14 @@
 
 ;;(setq fr-mode-hook nil)
 (require 'skim-mode)
+;;(setq fr-mode-hook nil)
 (add-hook 'fr-mode-hook 'read-only-mode 'skim-mode)
 (add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
+(add-hook 'fr-mode-hook
+	  '(lambda ()
+	     (add-handler-for-regex
+	      "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-oozi-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
+	      'fr-action-handler)))
+
 
 (provide 'fr-mode)
