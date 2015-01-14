@@ -162,10 +162,19 @@
 	 'content (match-string 0)))))
 
 ;;(fr-custom-run "find .")
+(defun goto-next-link ()
+  (interactive)
+  (forward-button 1))
 
+(defun goto-prev-link ()
+  (interactive)
+  (backward-button 1))
+		 
 (defvar fr-map (make-sparse-keymap) "fr-mode keymap")
-(define-key fr-map (kbd "C-c n") nil)
-(define-key fr-map (kbd "C-c p") nil)
+(define-key fr-map (kbd "C-c n") 'goto-next-link)
+(define-key fr-map (kbd "C-c p") 'goto-prev-link)
+(define-key fr-map (kbd "C-c C-n") 'goto-next-link)
+(define-key fr-map (kbd "C-c C-p") 'goto-prev-link)
 (define-key fr-map (kbd "C-c u") 'fr-custom-run)
 (define-key fr-map (kbd "C-c i") 'fr-oozie-info)
 (define-key fr-map (kbd "C-c l") 'fr-oozie-log)
