@@ -139,8 +139,8 @@
 	   (cmd-weave "yarn logs -applicationId" job_id))))
     (fr-run-cmd command yarn-inf-buf)))
 
-(defun fr-action-handler (x)
-  (let* ((content (button-get x 'content))
+(defun fr-action-handler (b)
+  (let* ((content (button-label b))
 	 (job_id  (replace-regexp-in-string "job" "application" content)))
     (cond ((bound-and-true-p laptop)
 	   (fr-find-file-in-project (car (split-string job_id "@"))))
@@ -150,16 +150,18 @@
 	   (fr-yarn-handler job_id))
 	  (t (message "Don't know how to handle %s" job_id)))))
 
-(defun add-handler-for-regex (regex handler)
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward regex nil t)
-	(make-button ;;or make-button/make-text-button
-	 (match-beginning 0)
-	 (match-end 0)
-	 'action handler
-         'follow-link t
-	 'content (match-string 0)))))
+(defun add-button-for-regex (regex button)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward regex nil t)
+      (make-button ;;or make-button/make-text-button
+       (match-beginning 0)
+       (match-end 0)
+       :type button))))
+
+(define-button-type 'fr-action-button
+  'action 'fr-action-handler
+  'follow-link t)
 
 ;;(fr-custom-run "find .")
 (defun goto-next-link ()
@@ -195,11 +197,13 @@
 ;;(setq fr-mode-hook nil)
 (add-hook 'fr-mode-hook 'read-only-mode 'skim-mode)
 (add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
-(add-hook 'fr-mode-hook
-	  '(lambda ()
-	     (add-handler-for-regex
+
+(defun fr-decorator ()
+  (add-button-for-regex
 	      "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-oozi-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
-	      'fr-action-handler)))
+	      'fr-action-button))
+
+(add-hook 'fr-mode-hook 'fr-decorator)
 
 
 (provide 'fr-mode)
