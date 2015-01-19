@@ -176,14 +176,6 @@
 
 ;;(nslookup-host "74.125.239.40")
 
-
-(defun fetch-json (url)
-  (with-current-buffer (url-retrieve-synchronously url)
-   ; there's probably a better way of stripping the headers
-    (search-forward "\n\n")
-    (delete-region (point-min) (point))
-    (buffer-string)))
-
 ;(cdr (assoc 'result (json-read-from-string (fetch-json (concat "http://localhost:9000/test?param=" (url-hexify-string "ls -al ~/"))))))
 
 
@@ -225,3 +217,4 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'backport)
 (require 'fr-mode)
+(require 'timesync)
