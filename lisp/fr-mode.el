@@ -200,8 +200,8 @@
 
 (defun fr-decorator ()
   (add-button-for-regex
-	      "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-oozi-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
-	      'fr-action-button))
+   "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-\\(oozi\\|hado\\)-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
+   'fr-action-button))
 
 (add-hook 'fr-mode-hook 'fr-decorator)
 
