@@ -16,9 +16,11 @@
 ;;
 ;; Author: Raghav Kumar Gautam <raghavgautam@gmail.com>
 
-(setq ido-enable-flex-matching t
+(unless (bound-and-true-p laptop)
+  (setq ido-enable-flex-matching t
       ido-everywhere t)
-(ido-mode 1)
+  (ido-mode 1))
+
 (put 'narrow-to-region 'disabled nil)
 
 (when (require 'package nil 'noerror)
