@@ -3,7 +3,7 @@
 (defvar skim-fail-str "]) FAILED" "String for searching failuers")
 (defvar skim-success-str "]) SUCCESS" "String for searching success")
 (defvar skim-skip-str "]) SKIPPED" "String for searching skipped")
-
+(defvar skim-request-str "Request Url: " "String for determining falcon request")
 
 (defun skim-next-begin-test ()
   "Takes you to the begining of the next test."
@@ -44,6 +44,16 @@
   "Takes you to the previous success."
   (interactive)
   (search-backward skim-success-str))
+
+(defun skim-next-request ()
+  "Takes you to the next request."
+  (interactive)
+  (search-forward skim-request-str))
+
+(defun skim-prev-request ()
+  "Takes you to the previous request."
+  (interactive)
+  (search-backward skim-request-str))
 
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
@@ -156,12 +166,16 @@
 
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 
+(define-key skim-map (kbd "M-n M-l") 'goto-next-link)
+(define-key skim-map (kbd "M-p M-l") 'goto-prev-link)
 (define-key skim-map (kbd "M-n M-b") 'skim-next-begin-test)
 (define-key skim-map (kbd "M-p M-b") 'skim-prev-begin-test)
 (define-key skim-map (kbd "M-n M-e") 'skim-next-end-test)
 (define-key skim-map (kbd "M-p M-e") 'skim-prev-end-test)
 (define-key skim-map (kbd "M-n M-s") 'skim-next-success)
 (define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
+(define-key skim-map (kbd "M-n M-r") 'skim-next-request)
+(define-key skim-map (kbd "M-p M-r") 'skim-prev-request)
 (define-key skim-map (kbd "M-n M-f") 'skim-next-failure)
 (define-key skim-map (kbd "TAB") 'skim-next-failure)
 (define-key skim-map (kbd "M-p M-f") 'skim-prev-failure)
