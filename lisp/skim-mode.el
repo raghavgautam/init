@@ -29,27 +29,8 @@
     (when kbd-postfix
       `(define-key skim-map (kbd ,prev-key) ',prev-function))))
 
-(add-regex-search "begin-test" "Takes you to the begining of the %s test." skim-begin-str "b")
-
-(defun skim-next-begin-test ()
-  "Takes you to the begining of the next test."
-  (interactive)
-  (search-forward skim-begin-str))
-
-(defun skim-prev-begin-test ()
-  "Takes you to the end of the previous test."
-  (interactive)
-  (search-backward skim-begin-str))
-
-(defun skim-next-end-test ()
-  "Takes you to the ending of the next test."
-  (interactive)
-  (search-forward skim-end-str))
-
-(defun skim-prev-end-test ()
-  "Takes you to the end of the previous test."
-  (interactive)
-  (search-backward skim-end-str))
+(add-regex-search begin-test "Takes you to the begining of the %s test." skim-begin-str "b")
+(add-regex-search end-test   "Takes you to the ending of the %s test."   skim-end-str   "e")
 
 (defun skim-next-failure ()
   "Takes you to the next failure."
@@ -192,10 +173,6 @@
 
 (define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 (define-key skim-map (kbd "M-p M-l") 'goto-prev-link)
-(define-key skim-map (kbd "M-n M-b") 'skim-next-begin-test)
-(define-key skim-map (kbd "M-p M-b") 'skim-prev-begin-test)
-(define-key skim-map (kbd "M-n M-e") 'skim-next-end-test)
-(define-key skim-map (kbd "M-p M-e") 'skim-prev-end-test)
 (define-key skim-map (kbd "M-n M-s") 'skim-next-success)
 (define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
 (define-key skim-map (kbd "M-n M-r") 'skim-next-request)
