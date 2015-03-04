@@ -5,6 +5,7 @@
 (defvar skim-skip-str "]) SKIPPED" "String for searching skipped")
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
 
+(defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 (defun skim-next-begin-test ()
   "Takes you to the begining of the next test."
   (interactive)
@@ -163,8 +164,6 @@
   (interactive)
   (re-search-forward skim-record-regex nil t 2)
   (move-beginning-of-line nil))
-
-(defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 
 (define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 (define-key skim-map (kbd "M-p M-l") 'goto-prev-link)
