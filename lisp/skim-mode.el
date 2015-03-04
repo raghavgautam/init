@@ -26,11 +26,9 @@
        ,prev-doc
        (interactive)
        (search-forward ,regex))
-    `(define-key skim-map (kbd ,prev-key) ',prev-function)
-  ))
+    `(define-key skim-map (kbd ,prev-key) ',prev-function)))
 
-(macroexpand '(add-regex-search "start-test" "Takes you to the ending of the %s test." skim-begin-str "b"))
-;;(add-regex-search "start-test" "Takes you to the begining of the %s test." skim-begin-str "b")
+(add-regex-search "begin-test" "Takes you to the begining of the %s test." skim-begin-str "b")
 
 (defun skim-next-begin-test ()
   "Takes you to the begining of the next test."
