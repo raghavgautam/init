@@ -8,25 +8,26 @@
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 ;;(define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 
-(defmacro add-regex-search (purpose doc-template regex kbd-postfix)
-  (let ((next-function (intern (concat "skim-next-" purpose)))
+(defmacro add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
+  (let ((next-function (intern (format "skim-next-%s" function-name-suffix)))
 	(next-doc (format doc-template "next"))
 	(next-key (concat "M-n M-" kbd-postfix))
-	(prev-function (intern (concat "skim-prev-" purpose)))
+	(prev-function (intern (format "skim-prev-%s" function-name-suffix)))
 	(prev-doc (format doc-template "prev"))
-	(prev-key (concat "M-n M-" kbd-postfix))
-	)
+	(prev-key (concat "M-n M-" kbd-postfix)))
     `(defun ,next-function ()
        ,next-doc
        (interactive)
        (search-forward ,regex))
-    `(define-key skim-map (kbd ,next-key) ',next-function)
+    (when kbd-postfix
+      `(define-key skim-map (kbd ,next-key) ',next-function))
 
     `(defun ,prev-function ()
        ,prev-doc
        (interactive)
        (search-forward ,regex))
-    `(define-key skim-map (kbd ,prev-key) ',prev-function)))
+    (when kbd-postfix
+      `(define-key skim-map (kbd ,prev-key) ',prev-function))))
 
 (add-regex-search "begin-test" "Takes you to the begining of the %s test." skim-begin-str "b")
 
