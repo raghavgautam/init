@@ -134,12 +134,17 @@
      top-line
      yarn-bin
      options)))
-
+(defvar temp-dir
+  (if (bound-and-true-p laptop)
+      "~/tmp/"
+    "/tmp/")
+  "Temp directory to use.")
+  
 (defun write-in-tmp (file-name)
   "Write the buffer in /tmp/ dir"
   (interactive
    (list
-    (read-from-minibuffer "Write to file: " (concat "/tmp/" (replace-regexp-in-string "*" "" (buffer-name)) ".txt"))))
+    (read-from-minibuffer "Write to file: " (concat temp-dir (replace-regexp-in-string "*" "" (buffer-name)) ".txt"))))
   (write-file file-name))
 
 (defun collect-text (beg end &optional region)
