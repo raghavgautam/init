@@ -6,6 +6,32 @@
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
 
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
+;;(define-key skim-map (kbd "M-n M-l") 'goto-next-link)
+
+(defmacro add-regex-search (purpose doc-template regex kbd-postfix)
+  (let ((next-function (intern (concat "skim-next-" purpose)))
+	(next-doc (format doc-template "next"))
+	(next-key (concat "M-n M-" kbd-postfix))
+	(prev-function (intern (concat "skim-prev-" purpose)))
+	(prev-doc (format doc-template "prev"))
+	(prev-key (concat "M-n M-" kbd-postfix))
+	)
+    `(defun ,next-function ()
+       ,next-doc
+       (interactive)
+       (search-forward ,regex))
+    `(define-key skim-map (kbd ,next-key) ',next-function)
+
+    `(defun ,prev-function ()
+       ,prev-doc
+       (interactive)
+       (search-forward ,regex))
+    `(define-key skim-map (kbd ,prev-key) ',prev-function)
+  ))
+
+(macroexpand '(add-regex-search "start-test" "Takes you to the ending of the %s test." skim-begin-str "b"))
+;;(add-regex-search "start-test" "Takes you to the begining of the %s test." skim-begin-str "b")
+
 (defun skim-next-begin-test ()
   "Takes you to the begining of the next test."
   (interactive)
