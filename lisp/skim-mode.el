@@ -8,33 +8,34 @@
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 ;;(define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 
-(defmacro add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
+(defun add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
   (let ((next-function (intern (format "skim-next-%s" function-name-suffix)))
 	(next-doc (format doc-template "next"))
 	(next-key (concat "M-n M-" kbd-postfix))
 	(prev-function (intern (format "skim-prev-%s" function-name-suffix)))
 	(prev-doc (format doc-template "prev"))
 	(prev-key (concat "M-p M-" kbd-postfix)))
-    `(defun ,next-function ()
-       ,next-doc
-       (interactive)
-       (search-forward ,regex))
+    (fset next-function
+	  `(lambda ()
+	     ,next-doc
+	     (interactive)
+	     (search-forward ,regex)))
     (when kbd-postfix
-      `(define-key skim-map (kbd ,next-key) ',next-function))
-
-    `(defun ,prev-function ()
-       ,prev-doc
-       (interactive)
-       (search-backward ,regex))
+      (define-key skim-map (kbd next-key) next-function))
+    (fset prev-function
+	  `(lambda ()
+	     ,prev-doc
+	     (interactive)
+	     (search-backward ,regex)))
     (when kbd-postfix
-      `(define-key skim-map (kbd ,prev-key) ',prev-function))))
+      (define-key skim-map (kbd prev-key) prev-function))))
 
-(add-regex-search begin-test "Go to begining of the %s test." skim-begin-str "b")
-(add-regex-search end-test   "Go to ending of the %s test."   skim-end-str   "e")
-(add-regex-search failure    "Go to %s failure." (regexp-opt (list skim-fail-str skim-skip-str)) "f")
-(add-regex-search success    "Go to %s success."  skim-success-str "s")
-(add-regex-search request    "Go to %s request."  skim-request-str "r")
-(add-regex-search record     "Go to %s record" skim-record-regex "g")
+(add-regex-search 'begin-test "Go to begining of the %s test." skim-begin-str "b")
+(add-regex-search 'end-test   "Go to ending of the %s test."   skim-end-str   "e")
+(add-regex-search 'failure    "Go to %s failure." (regexp-opt (list skim-fail-str skim-skip-str)) "f")
+(add-regex-search 'success    "Go to %s success."  skim-success-str "s")
+(add-regex-search 'request    "Go to %s request."  skim-request-str "r")
+(add-regex-search 'record     "Go to %s record" skim-record-regex "g")
 
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
