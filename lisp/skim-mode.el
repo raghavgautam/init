@@ -6,7 +6,6 @@
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
 
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
-;;(define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 
 (defun add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
   (let ((next-function (intern (format "skim-next-%s" function-name-suffix)))
