@@ -14,7 +14,7 @@
 	(next-key (concat "M-n M-" kbd-postfix))
 	(prev-function (intern (format "skim-prev-%s" function-name-suffix)))
 	(prev-doc (format doc-template "prev"))
-	(prev-key (concat "M-n M-" kbd-postfix)))
+	(prev-key (concat "M-p M-" kbd-postfix)))
     `(defun ,next-function ()
        ,next-doc
        (interactive)
@@ -25,42 +25,16 @@
     `(defun ,prev-function ()
        ,prev-doc
        (interactive)
-       (search-forward ,regex))
+       (search-backward ,regex))
     (when kbd-postfix
       `(define-key skim-map (kbd ,prev-key) ',prev-function))))
 
-(add-regex-search begin-test "Takes you to the begining of the %s test." skim-begin-str "b")
-(add-regex-search end-test   "Takes you to the ending of the %s test."   skim-end-str   "e")
-
-(defun skim-next-failure ()
-  "Takes you to the next failure."
-  (interactive)
-  (re-search-forward (regexp-opt (list skim-fail-str skim-skip-str))))
-
-(defun skim-prev-failure ()
-  "Takes you to the previous failure."
-  (interactive)
-  (re-search-backward (regexp-opt (list skim-fail-str skim-skip-str))))
-
-(defun skim-next-success ()
-  "Takes you to the next success."
-  (interactive)
-  (search-forward skim-success-str))
-
-(defun skim-prev-success ()
-  "Takes you to the previous success."
-  (interactive)
-  (search-backward skim-success-str))
-
-(defun skim-next-request ()
-  "Takes you to the next request."
-  (interactive)
-  (search-forward skim-request-str))
-
-(defun skim-prev-request ()
-  "Takes you to the previous request."
-  (interactive)
-  (search-backward skim-request-str))
+(add-regex-search begin-test "Go to begining of the %s test." skim-begin-str "b")
+(add-regex-search end-test   "Go to ending of the %s test."   skim-end-str   "e")
+(add-regex-search failure    "Go to %s failure." (regexp-opt (list skim-fail-str skim-skip-str)) "f")
+(add-regex-search success    "Go to %s success."  skim-success-str "s")
+(add-regex-search request    "Go to %s request."  skim-request-str "r")
+(add-regex-search record     "Go to %s record" skim-record-regex "g")
 
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
@@ -160,32 +134,10 @@
     (forward-line)
     ))
 
-(defun skim-prev-record ()
-  "go to next record"
-  (interactive)
-  (re-search-backward skim-record-regex))
-
-(defun skim-next-record ()
-  "go to previous log record"
-  (interactive)
-  (re-search-forward skim-record-regex nil t 2)
-  (move-beginning-of-line nil))
-
 (define-key skim-map (kbd "M-n M-l") 'goto-next-link)
 (define-key skim-map (kbd "M-p M-l") 'goto-prev-link)
-(define-key skim-map (kbd "M-n M-s") 'skim-next-success)
-(define-key skim-map (kbd "M-p M-s") 'skim-prev-success)
-(define-key skim-map (kbd "M-n M-r") 'skim-next-request)
-(define-key skim-map (kbd "M-p M-r") 'skim-prev-request)
-(define-key skim-map (kbd "M-n M-f") 'skim-next-failure)
 (define-key skim-map (kbd "TAB") 'skim-next-failure)
-(define-key skim-map (kbd "M-p M-f") 'skim-prev-failure)
 (define-key skim-map (kbd "<backtab>") 'skim-prev-failure)
-
-
-(define-key skim-map (kbd "M-n M-r") 'skim-next-record)
-(define-key skim-map (kbd "M-p M-r") 'skim-prev-record)
-
 
 (define-minor-mode skim-mode
   "Simplifying skimming of logs."
