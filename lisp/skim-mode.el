@@ -4,6 +4,8 @@
 (defvar skim-success-str "]) SUCCESS" "String for searching success")
 (defvar skim-skip-str "]) SKIPPED" "String for searching skipped")
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
+(defvar skim-record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)" "Regex for determining begining of a log record")
+
 
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 
