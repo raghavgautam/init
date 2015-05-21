@@ -20,14 +20,14 @@
 	  `(lambda ()
 	     ,next-doc
 	     (interactive)
-	     (search-forward ,regex)))
+	     (re-search-forward ,regex)))
     (when kbd-postfix
       (define-key skim-map (kbd next-key) next-function))
     (fset prev-function
 	  `(lambda ()
 	     ,prev-doc
 	     (interactive)
-	     (search-backward ,regex)))
+	     (re-search-backward ,regex)))
     (when kbd-postfix
       (define-key skim-map (kbd prev-key) prev-function))))
 
