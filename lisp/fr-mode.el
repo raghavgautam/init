@@ -150,6 +150,18 @@
 	   (fr-yarn-handler job_id))
 	  (t (message "Don't know how to handle %s" job_id)))))
 
+(defun fr-requestid-action-handler (b)
+  (let* ((requestid (button-label b))
+	 (falcon-app-log-filename (remove-if-not (lambda (x) (string-match-p "falcon.application.log" x)) (projectile-current-project-files)))
+	 (project-root-dir (projectile-project-root))
+	 (falcon-app-logs (mapcar (lambda (x) (concat project-root-dir x)) falcon-app-log-filename)))
+    (mapcar (lambda (one-log)
+	      (with-current-buffer (find-file-noselect one-log)
+		(goto-char (point-min))
+		(when (search-forward requestid nil t)
+		  (switch-to-buffer (current-buffer)))))
+	    falcon-app-logs)))
+
 (defun add-button-for-regex (regex button)
   (save-excursion
     (goto-char (point-min))
@@ -161,6 +173,10 @@
 
 (define-button-type 'fr-action-button
   'action 'fr-action-handler
+  'follow-link t)
+
+(define-button-type 'fr-requestid-action-button
+  'action 'fr-requestid-action-handler
   'follow-link t)
 
 ;;(fr-custom-run "find .")
@@ -204,9 +220,11 @@
 (defun fr-decorator ()
   (add-button-for-regex
    "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-\\(oozi\\|hado\\)-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
-   'fr-action-button))
+   'fr-action-button)
+  (add-button-for-regex
+   "\\([[:alnum:]]\\{8\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{12\\}\\)"
+   'fr-requestid-action-button))
 
-(add-hook 'fr-mode-hook 'fr-decorator)
 
 
 (provide 'fr-mode)
