@@ -195,7 +195,10 @@
 ;;(setq fr-mode-hook nil)
 (require 'skim-mode)
 ;;(setq fr-mode-hook nil)
-(add-hook 'fr-mode-hook 'read-only-mode 'skim-mode)
+(add-hook 'fr-mode-hook 'read-only-mode)
+(add-hook 'fr-mode-hook 'skim-mode)
+(add-hook 'fr-mode-hook '(lambda () (jit-lock-mode t)))
+(add-hook 'fr-mode-hook 'fr-decorator t)
 (add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
 (defun fr-decorator ()
