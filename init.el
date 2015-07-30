@@ -23,7 +23,7 @@
 
 (put 'narrow-to-region 'disabled nil)
 
-(when (require 'package nil 'noerror)
+(when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
