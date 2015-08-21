@@ -15,6 +15,7 @@
 ;; limitations under the License.
 ;;
 ;; Author: Raghav Kumar Gautam <raghavgautam@gmail.com>
+(require 'cl-lib)
 
 (defvar-local fr-tmp-buf "fr-tmp-buf" "temp buffer for processing related to fr-mode")
 
@@ -152,7 +153,7 @@
 
 (defun fr-requestid-action-handler (b)
   (let* ((requestid (button-label b))
-	 (falcon-app-log-filename (remove-if-not (lambda (x) (string-match-p "falcon.application.log" x)) (projectile-current-project-files)))
+	 (falcon-app-log-filename (cl-remove-if-not (lambda (x) (string-match-p "falcon.application.log" x)) (projectile-current-project-files)))
 	 (project-root-dir (projectile-project-root))
 	 (falcon-app-logs (mapcar (lambda (x) (concat project-root-dir x)) falcon-app-log-filename)))
     (mapcar (lambda (one-log)
