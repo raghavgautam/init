@@ -200,6 +200,10 @@
 (define-key fr-map (kbd "C-c s") 'fr-setup)
 (define-key fr-map (kbd "C-c v") 'fr-set-vars)
 (define-key fr-map (kbd "C-c d") 'load-file)
+(define-key fr-map (kbd "q") (lambda () (interactive)
+			       (if (s-ends-with? "-output.txt" (buffer-file-name))
+				   (message "Not killing test log buffer: %s" (buffer-file-name))
+				 (kill-buffer))))
 ;;;###autoload
 (define-minor-mode fr-mode
   "Simplifying analysis of hadoop and oozie jobs."
