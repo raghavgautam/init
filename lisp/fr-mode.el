@@ -223,14 +223,13 @@
 (add-hook 'fr-mode-hook 'fr-decorator t)
 (add-hook 'fr-mode-hook '(lambda () (fr-set-vars (gethostname))))
 
+(defconst fr-oozie-id-regex "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-\\(oozi\\|hado\\)-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)")
+(defconst fr-screenshot-regex    "[a-z][A-Z]+\\.[a-zA-Z]+(\\[.*\\])")
+(defconst fr-falcon-requestid-regex "\\([[:alnum:]]\\{8\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{12\\}\\)")
+
 (defun fr-decorator ()
-  (add-button-for-regex
-   "\\([[:digit:]]\\{7\\}-[[:digit:]]\\{15\\}-oozie-\\(oozi\\|hado\\)-[BCW]\\(@[[:digit:]]+\\)?\\|\\(job\\|application\\)_[[:digit:]]\\{13\\}_[[:digit:]]\\{4\\}\\)"
-   'fr-action-button)
-  (add-button-for-regex
-   "\\([[:alnum:]]\\{8\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{4\\}-[[:alnum:]]\\{12\\}\\)"
-   'fr-requestid-action-button))
-
-
+  (add-button-for-regex fr-oozie-id-regex         'fr-action-button)
+  (add-button-for-regex fr-screenshot-regex       'fr-action-button)
+  (add-button-for-regex fr-falcon-requestid-regex 'fr-requestid-action-button))
 
 (provide 'fr-mode)
