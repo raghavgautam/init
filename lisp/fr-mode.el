@@ -217,7 +217,6 @@
 (require 'skim-mode)
 ;;(setq fr-mode-hook nil)
 (add-hook 'fr-mode-hook 'read-only-mode)
-(add-hook 'fr-mode-hook 'text-mode)
 (add-hook 'fr-mode-hook 'skim-mode)
 (add-hook 'fr-mode-hook '(lambda () (jit-lock-mode t)))
 (add-hook 'fr-mode-hook 'fr-decorator t)
