@@ -15,7 +15,8 @@
 ;; limitations under the License.
 ;;
 ;; Author: Raghav Kumar Gautam <raghavgautam@gmail.com>
-(require 'cl-lib)
+(ignore-errors (require 'cl-lib))
+(ignore-errors (require 'cl))
 
 (defvar-local fr-tmp-buf "fr-tmp-buf" "temp buffer for processing related to fr-mode")
 
