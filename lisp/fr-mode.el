@@ -33,13 +33,15 @@
 
 (defvar-local cmd-buf "command" "Output of a generic command")
 
-(defvar-local setup-buf "setup" "Output of setup command")
-(defvar-local setup-cmd nil "Output of setup command")
-
 (defvar-local yarn-inf-buf "yarn-info" "Yarn info buffer")
 (defvar-local yarn-inf-cmd nil "yarn info command")
 
-;(setq ac-delay 0.1)
+(defvar-local setup-buf "setup" "Output of setup command")
+(defcustom setup-cmd
+  "curl -L https://github.com/raghavgautam/init/archive/master.zip -o /tmp/`whoami`.zip; unzip -o -d /tmp/`whoami`/ /tmp/`whoami`.zip; chmod -R 777 /tmp/`whoami`/; mkdir ~/.emacs.d/; rm -rf ~/.emacs.d/lisp; mv /tmp/`whoami`/init-master/* /tmp/`whoami`/init-master/.[^.]* ~/.emacs.d/; ~/.emacs.d/setup.sh"
+  "Setup command"
+  :group 'fr)
+					;(setq ac-delay 0.1)
 (defun cmd-weave (&rest cmd-parts)
   "Weave parts of command together"
   (mapconcat 'identity cmd-parts " "))
@@ -62,7 +64,7 @@
     (let ((output (buffer-string)))
       (kill-buffer)
       output)))
-  
+
 (defun gethostname ()
   "get hostname for current buffer"
   (if (string= system-type "windows-nt") (replace-regexp-in-string "\n$" "" (fr-run-cmd-get-output (cmd-weave "hostname")))
@@ -71,10 +73,9 @@
 (defun fr-set-vars (host)
   (interactive
    (list (read-from-minibuffer "Hostname: " (gethostname))))
-  (setq setup-cmd "curl -L https://github.com/raghavgautam/init/archive/master.zip -o /tmp/`whoami`.zip; unzip -o -d /tmp/`whoami`/ /tmp/`whoami`.zip; chmod -R 777 /tmp/`whoami`/; mkdir ~/.emacs.d/; rm -rf ~/.emacs.d/lisp; mv /tmp/`whoami`/init-master/* /tmp/`whoami`/init-master/.[^.]* ~/.emacs.d/; ~/.emacs.d/setup.sh")
   (setq host-name host
 	ooz-bin (or (car (file-expand-wildcards "d:/hdp/oozie-*/oozie-win-distro/bin/oozie"))
-		      "oozie")
+		    "oozie")
 	ooz-url (concat "http://" host-name ":11000/oozie")
 	ooz-job-cmd (cmd-weave ooz-bin "job" "-oozie" ooz-url)
 	ooz-inf-cmd (cmd-weave ooz-job-cmd "-info")
@@ -189,7 +190,7 @@
 (defun goto-prev-link ()
   (interactive)
   (backward-button 1))
-		 
+
 (defvar fr-map (make-sparse-keymap) "fr-mode keymap")
 (define-key fr-map (kbd "C-c n") 'goto-next-link)
 (define-key fr-map (kbd "C-c p") 'goto-prev-link)
