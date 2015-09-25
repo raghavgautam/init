@@ -1,8 +1,11 @@
 (defvar skim-begin-str "Testing going to start for" "String for searching start of test")
 (defvar skim-end-str "Testing going to end for" "String for searching end of test")
 (defvar skim-fail-str "]) FAILED" "String for searching failuers")
+(defvar skim-fail-str2 "]) ----- Status: FAILED" "String for searching failuers")
 (defvar skim-success-str "]) SUCCESS" "String for searching success")
+(defvar skim-success-str2 "]) ----- Status: SUCCESS" "String for searching success")
 (defvar skim-skip-str "]) SKIPPED" "String for searching skipped")
+(defvar skim-skip-str2 "]) ----- Status: SKIPPED" "String for searching skipped")
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
 (defvar skim-record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)" "Regex for determining begining of a log record")
 
@@ -33,8 +36,8 @@
 
 (add-regex-search 'begin-test "Go to begining of the %s test." skim-begin-str "b")
 (add-regex-search 'end-test   "Go to ending of the %s test."   skim-end-str   "e")
-(add-regex-search 'failure    "Go to %s failure." (regexp-opt (list skim-fail-str skim-skip-str)) "f")
-(add-regex-search 'success    "Go to %s success."  skim-success-str "s")
+(add-regex-search 'failure    "Go to %s failure." (regexp-opt (list skim-fail-str skim-skip-str skim-fail-str2 skim-skip-str2)) "f")
+(add-regex-search 'success    "Go to %s success."  (regexp-opt (list skim-success-str skim-success-str2)) "s")
 (add-regex-search 'request    "Go to %s request."  skim-request-str "r")
 (add-regex-search 'record     "Go to %s record" skim-record-regex "g")
 
@@ -90,7 +93,7 @@
 	   ;;associated with internal server error
 	   "Invalid Workflow server or port"
 	   "HTTP ERROR 500"
-	    ;;associated with internal server error
+	   ;;associated with internal server error
 	   "org.mortbay.thread.QueuedThreadPool$PoolThread.run")))
     (save-excursion
       (goto-char (point-min))
