@@ -223,4 +223,5 @@
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'backport)
 (require 'fr-mode)
+(require 'storm-skim-mode)
 (require 'timesync)
