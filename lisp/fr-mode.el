@@ -41,7 +41,7 @@
   "curl -L https://github.com/raghavgautam/init/archive/master.zip -o /tmp/`whoami`.zip; unzip -o -d /tmp/`whoami`/ /tmp/`whoami`.zip; chmod -R 777 /tmp/`whoami`/; mkdir ~/.emacs.d/; rm -rf ~/.emacs.d/lisp; mv /tmp/`whoami`/init-master/* /tmp/`whoami`/init-master/.[^.]* ~/.emacs.d/; ~/.emacs.d/setup.sh"
   "Setup command"
   :group 'fr)
-					;(setq ac-delay 0.1)
+;;(setq ac-delay 0.1)
 (defun cmd-weave (&rest cmd-parts)
   "Weave parts of command together"
   (mapconcat 'identity cmd-parts " "))
