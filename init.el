@@ -249,8 +249,8 @@
 		      (lambda (x)
 			(concat (file-name-as-directory dir) x))
 		      file+dir))
-	       (let* ((files (delete-if-not 'file-regular-p (copy-seq file+dir)))
-		      (dirs (delete-if 'file-regular-p (copy-seq file+dir)))
+	       (let* ((files (remove-if-not 'file-regular-p file+dir))
+		      (dirs (remove-if 'file-regular-p file+dir))
 		      (more-files (apply #'append (mapcar 'directory-files-recursive dirs))))
 		 (append files more-files)))))))
 
