@@ -218,6 +218,42 @@
   (interactive
    (isearch-forward log-timestamp)))
 
+(defcustom dir-ignore-list
+  '("." ".." ".git" ".idea")
+  "List of file/directories to ignore")
+
+(defcustom dir-include-list
+  '("/etc" "/mnt/hadoopqe" "/grid/0/hadoopqe" "/home/hrt_qa")
+  "List of file/directories to include")
+
+(defun rkg-ff ()
+  (interactive)
+  (find-file
+   (ido-completing-read
+    "Test:"
+    (apply #'append  (mapcar 'directory-files-recursive dir-include-list)))))
+
+(defun directory-files-recursive (dir)
+  (setq dir (expand-file-name dir))
+  (ignore-errors
+    (cond ((not (file-exists-p dir)) nil)
+	  ((not (file-accessible-directory-p dir)) nil)
+	  ((file-regular-p dir) dir)
+	  (t (let* ((file+dir (directory-files dir)))
+	       (setq file+dir
+		     (delete-if
+		      (lambda (x) (member x dir-ignore-list))
+		      file+dir))
+	       (setq file+dir
+		     (mapcar
+		      (lambda (x)
+			(concat (file-name-as-directory dir) x))
+		      file+dir))
+	       (let* ((files (delete-if-not 'file-regular-p (copy-seq file+dir)))
+		      (dirs (delete-if 'file-regular-p (copy-seq file+dir)))
+		      (more-files (apply #'append (mapcar 'directory-files-recursive dirs))))
+		 (append files more-files)))))))
+
 (add-to-list 'load-path "~/init/")
 (add-to-list 'load-path "~/init/lisp")
 (add-to-list 'load-path "~/.emacs.d/lisp")
