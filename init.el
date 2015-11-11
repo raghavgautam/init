@@ -26,7 +26,10 @@
 (when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (ignore-errors
+    (package-install 'helm)
+    (package-install 'tramp-hdfs)))
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
