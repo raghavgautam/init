@@ -91,6 +91,9 @@
 	   ;;associated with internal server error
 	   "Invalid Workflow server or port"
 	   "HTTP ERROR 500"
+	   "/bin/"
+	   "\\bin\\"
+	   "curl"
 	   ;;associated with internal server error
 	   "org.mortbay.thread.QueuedThreadPool$PoolThread.run")))
     (save-excursion
