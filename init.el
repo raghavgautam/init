@@ -23,6 +23,15 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+(when (equal emacs-major-version 23)
+  (setq url-proxy-services '(("no_proxy" . ".*")))
+  (when (not (require 'package nil 'noerror))
+    (let ((buffer (url-retrieve-synchronously "http://tromey.com/elpa/package-install.el")))
+      (if (not buffer)
+	  (message "Attempt to fetch package-install.el failed.")
+	(eval-buffer buffer)
+	(kill-buffer (current-buffer))))))
+
 (when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
