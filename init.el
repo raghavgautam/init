@@ -23,25 +23,32 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+
 (when (equal emacs-major-version 23)
-  (setq url-proxy-services '(("no_proxy" . ".*")))
-  (when (not (require 'package nil 'noerror))
-    (let ((buffer (url-retrieve-synchronously "http://tromey.com/elpa/package-install.el")))
+  (if (load (expand-file-name "~/.emacs.d/elpa/package.el") t)
+      (package-initialize)
+    (setq url-proxy-services '(("no_proxy" . ".*")))
+    (let ((buffer
+	   (url-retrieve-synchronously "http://git.savannah.gnu.org/gitweb/?p=emacs.git;a=blob_plain;hb=ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09;f=lisp/emacs-lisp/package.el")))
       (if (not buffer)
 	  (message "Attempt to fetch package-install.el failed.")
 	(with-current-buffer buffer
 	  (goto-char (point-min))
 	  (re-search-forward "^$" nil 'move)
-	  (eval-region (point) (point-max)))
-	(kill-buffer (current-buffer))))))
+	  (eval-region (point) (point-max))
+	  (kill-buffer (current-buffer)))))))
 
 (when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (ignore-errors
+    (package-refresh-contents)
+    (package-install 'tramp-hdfs)
+    (package-install 'osx-lib)
     (package-install 'helm)
-    (package-install 'tramp-hdfs)))
+    (package-install 'helm-jstack)
+    (package-install 'helm-wordnet)))
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
