@@ -29,7 +29,10 @@
     (let ((buffer (url-retrieve-synchronously "http://tromey.com/elpa/package-install.el")))
       (if (not buffer)
 	  (message "Attempt to fetch package-install.el failed.")
-	(eval-buffer buffer)
+	(with-current-buffer buffer
+	  (goto-char (point-min))
+	  (re-search-forward "^$" nil 'move)
+	  (eval-region (point) (point-max)))
 	(kill-buffer (current-buffer))))))
 
 (when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
