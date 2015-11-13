@@ -6,7 +6,7 @@ SCREENRC_FILE=$BASEDIR/.screenrc
 EMACS_INIT=$BASEDIR/.emacs.d
 ME=`whoami`
 ME_FILE=$BASEDIR/$ME
-PKGS="emacs screen tree git"
+PKGS="emacs screen tree git tmux"
 
 if [ ! -f $ME_FILE ]; then
     cp -f $SCREENRC_FILE ~/.screenrc
