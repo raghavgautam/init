@@ -38,7 +38,7 @@
 	  (eval-region (point) (point-max))
 	  (kill-buffer (current-buffer)))))))
 
-(when (and (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
+(when (and (>= emacs-major-version 23) (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
