@@ -24,10 +24,10 @@
 (put 'narrow-to-region 'disabled nil)
 
 
+(setq url-proxy-services '(("no_proxy" . ".*")))
 (when (equal emacs-major-version 23)
   (if (load (expand-file-name "~/.emacs.d/elpa/package.el") t)
       (package-initialize)
-    (setq url-proxy-services '(("no_proxy" . ".*")))
     (let ((buffer
 	   (url-retrieve-synchronously "http://git.savannah.gnu.org/gitweb/?p=emacs.git;a=blob_plain;hb=ba08b24186711eaeb3748f3d1f23e2c2d9ed0d09;f=lisp/emacs-lisp/package.el")))
       (if (not buffer)
