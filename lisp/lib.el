@@ -1,5 +1,4 @@
 (setq tmp-buf "temp")
-
 (defun trim-string (string)
   "Remove white spaces in beginning and ending of STRING.
 White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
@@ -59,26 +58,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       "Choose: "
       (split-string (trim-string (robot-input)) "\n"))))))
 
-
-;;url decoding help
-(defun url-at-point ()
-  (let ((pt (point)))
-    (buffer-substring-no-properties
-     (save-excursion
-       (skip-chars-backward "-a-zA-Z0-9@:/.?&=%_*")
-       (point))
-     (save-excursion
-       (skip-chars-forward "-a-zA-Z0-9@:/.?&=%_*")
-       ;;(skip-chars-backward "." pt)
-       (point)))))
-
 (defun get-proj-root ()
   (interactive)
   (message default-directory))
 
 (defun my-url-decoder (url)
   (interactive
-   (list (read-from-minibuffer "URL: " (url-at-point))))
+   (list (read-from-minibuffer "URL: " (thing-at-point 'url))))
   "Decode a url and show it params and parts"
   (let* ((temp1 (split-string (url-unhex-string url) "?"))
 	 (retval (car temp1))
@@ -90,6 +76,5 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (message retval)
       retval
       )))
-
 ;;(my-url-decoder "http://ip-172-31-35-204.ec2.internal:15000/api/instance/list/process/agregator-coord16-02b73cdc?start=2014-10-31T23%3A18Z&end=2014-10-31T23%3A44Z&filterBy=status%3ARUNNING&user.name=hrt_qa")
-
+(provide 'lib)
