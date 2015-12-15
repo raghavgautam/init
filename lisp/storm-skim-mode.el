@@ -1,16 +1,16 @@
 (defvar storm-skim-begin-str "Testing going to start for" "String for searching start of test")
 (defvar storm-skim-end-str "Testing going to end for" "String for searching end of test")
-(defvar storm-test-start-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?RUNNING TEST .*? at location .*? at line number .*?\\)")
-(defvar storm-test-end-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? in .*? seconds\\)")
-(defvar storm-test-fail-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? FAILED in .*? seconds\\|tests/storm/.*?\\.py:[0-9]+?: .*\\|Error: .* [fF]ailed\\)")
+(defvar storm-test-start-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?RUNNING TEST .*? at location .*? at line number .*?\\)")
+(defvar storm-test-end-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? in .*? seconds\\)")
+(defvar storm-test-fail-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? FAILED in .*? seconds\\|tests/storm/.*?\\.py:[0-9]+?: .*\\|Error: .* [fF]ailed\\)")
 (defvar skim-success-str "]) SUCCESS" "String for searching success")
 (defvar skim-success-str2 "]) ----- Status: SUCCESS" "String for searching success")
 (defvar skim-skip-str "]) SKIPPED" "String for searching skipped")
 (defvar skim-skip-str2 "]) ----- Status: SKIPPED" "String for searching skipped")
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
-(defvar skim-record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)" "Regex for determining begining of a log record")
+(defvar skim-record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)" "Regex for determining begining of a log record")
 (defvar skim-important-logs-regex
-  "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-1][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\).*?[*]\\{3,20\\}[ _a-zA-Z]\\{3,50\\}[*]\\{3,20\\}"
+  "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\).*?[*]\\{3,20\\}[ _a-zA-Z]\\{3,50\\}[*]\\{3,20\\}"
   "Regex for important log messages.")
 
 
