@@ -25,7 +25,8 @@
 
 
 (setq url-proxy-services '(("no_proxy" . ".*")))
-(let ((pkg-file (expand-file-name "~/.emacs.d/elpa/package.el")))
+(let* ((pkg-dir (expand-file-name "~/.emacs.d/elpa/"))
+       (pkg-file (concat pkg-dir "package.el")))
   (when (equal emacs-major-version 23)
     (if (load pkg-file t)
 	(package-initialize)
@@ -38,7 +39,8 @@
 	    (re-search-forward "^$" nil 'move)
 	    (delete-region (point-min) (point))
 	    (eval-region (point) (point-max))
-	    (write-file pkg-file)
+	    (mkdir pkg-dir t)
+	    (write-file pkg-file nil)
 	    (kill-buffer (current-buffer))))))))
 
 (when (and (>= emacs-major-version 23) (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
