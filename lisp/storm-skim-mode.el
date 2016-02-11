@@ -12,6 +12,7 @@
 (defvar skim-important-logs-regex
   "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\).*?[*]\\{3,20\\}[ _a-zA-Z]\\{3,50\\}[*]\\{3,20\\}"
   "Regex for important log messages.")
+(defvar skim-odd-record-regex "Traceback (most recent call last)\\|Exception" "Regex for determining odd stuff.")
 
 
 (defvar storm-skim-map (make-sparse-keymap) "skim-mode keymap")
@@ -44,6 +45,7 @@
 (add-regex-search 'success    "Go to %s success."  (regexp-opt (list skim-success-str skim-success-str2)) "s")
 (add-regex-search 'request    "Go to %s request."  skim-request-str "r")
 (add-regex-search 'record     "Go to %s record" skim-record-regex "g")
+(add-regex-search 'record     "Go to %s odd record" skim-odd-record-regex "o")
 
 (defun skim-annotate-start-end ()
   "put fringe marker at start and end of test"
