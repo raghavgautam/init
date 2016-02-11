@@ -91,16 +91,22 @@
 	   ;;associated with internal server error
 	   "Invalid Workflow server or port"
 	   "HTTP ERROR 500"
-	   "/bin/"
-	   "\\bin\\"
+	   "Exception"
+	   "exception"
+	   "storm/bin/"
+	   "kafka/bin/"
+	   "storm\\bin\\"
+	   "kafka\\bin\\"
 	   "curl"
 	   ;;associated with internal server error
 	   "org.mortbay.thread.QueuedThreadPool$PoolThread.run")))
     (save-excursion
       (goto-char (point-min))
       (while (re-search-forward (regexp-opt keywords) nil t)
-	(let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-	  (overlay-put overlay 'face 'hi-red-b))))))
+	(let ((overlay (make-overlay (line-beginning-position) (line-end-position)))
+	      (overlay2 (make-overlay (match-beginning 0) (match-end 0))))
+	  (overlay-put overlay 'face 'hi-blue)
+	  (overlay-put overlay2 'face 'hi-blue-b))))))
 
 (defun storm-skim-test-start-end-annotate ()
   "Storm specific annotations."
