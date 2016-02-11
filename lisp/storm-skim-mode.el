@@ -1,6 +1,6 @@
 (defvar storm-skim-begin-str "Testing going to start for" "String for searching start of test")
 (defvar storm-skim-end-str "Testing going to end for" "String for searching end of test")
-(defvar storm-test-start-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?RUNNING TEST .*? at location .*? at line number .*?\\)")
+(defvar storm-test-start-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?RUNNING TEST .*? at location .*? at line number .*?\\|[tT]est [cC]ase [nN]ame : testcase_\\)")
 (defvar storm-test-end-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? in .*? seconds\\)")
 (defvar storm-test-fail-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? FAILED in .*? seconds\\|tests/storm/.*?\\.py:[0-9]+?: .*\\|Error: .* [fF]ailed\\)")
 (defvar skim-success-str "]) SUCCESS" "String for searching success")
