@@ -171,5 +171,21 @@
   :lighter " StSk"
   :keymap storm-skim-map)
 
+(setq storm-skim-font-lock-keywords
+      `(
+        ;;(,mylsl-type-regexp . font-lock-type-face)
+        (,storm-test-start-regex . font-lock-constant-face)
+	(,storm-test-end-regex . font-lock-constant-face)
+        ;;(,mylsl-event-regexp . font-lock-builtin-face)
+        ;;(,mylsl-functions-regexp . font-lock-function-name-face)
+        ;;(,mylsl-keywords-regexp . font-lock-keyword-face)
+        ))
+;;define-minor-mode 
+(define-derived-mode ead-mode nil " EAD"
+  "Emacs assisted debugging."
+  ;;(use-local-map storm-skim-map)
+  (setq font-lock-defaults '((storm-skim-font-lock-keywords))
+	ead-mode-map storm-skim-map))
+
 (provide 'storm-skim-mode)
 ;;; storm-skim-mode.el ends here
