@@ -77,4 +77,11 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       retval
       )))
 ;;(my-url-decoder "http://ip-172-31-35-204.ec2.internal:15000/api/instance/list/process/agregator-coord16-02b73cdc?start=2014-10-31T23%3A18Z&end=2014-10-31T23%3A44Z&filterBy=status%3ARUNNING&user.name=hrt_qa")
+
+;;find-file-at-point already exists, this is a poor man's implementation for machines where it is not available
+(defun open-file-at-point ()
+  "Open file at point"
+  (interactive)
+  (find-file (substring-no-properties (thing-at-point 'filename))))
+
 (provide 'lib)
