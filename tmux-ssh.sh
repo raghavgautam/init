@@ -11,7 +11,7 @@ launches a tmux with multiple windows
   file has one host on each line
 $ssh_opt environment variable controls the default ssh option
 $cmd environment variable controls the command that will be launched after ssh
-  should not contain \;
+  should not contain '
 EOF
     exit 1;
 }
@@ -23,7 +23,7 @@ do
     host=$line
     win_name=${host%%.[a-z]*}
     one_window="neww -n '${win_name}' \\; send-keys 'ssh $ssh_opt $host' C-m"
-    one_cmd="$cmd C-m"
+    one_cmd="'$cmd' C-m"
     out="$out $one_window $one_cmd \\;"
 done<"$file"
 out="$out next-window"
