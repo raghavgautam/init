@@ -1,4 +1,4 @@
-(defconst bogus-date (date-to-time ""))  ;;(14445 17280) is bogus
+(defconst bogus-date (or (ignore-errors (date-to-time "")) '(14445 17280))) ;;(14445 17280) is bogus
 
 ;;(benchmark-run-compiled 40000 (date-to-time "2014-10-12 11:11:11"))
 
