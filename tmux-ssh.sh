@@ -3,7 +3,7 @@
 ssh_opt=${ssh_opt:-"-o StrictHostKeyChecking=no"}
 
 [[ -n $1 ]] || {
-    echo "usage: $0 <all_hosts file>";
+    echo "usage: bash <(curl -sSL git.io/v2Qrz) <all_hosts file>";
     cat <<"EOF"
 launches a tmux with multiple windows
   each window does ssh to a host
