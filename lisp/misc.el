@@ -4,4 +4,4 @@
   (interactive)
   (find-file (substring-no-properties (thing-at-point 'filename))))
 
-
+(provide 'misc)
