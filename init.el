@@ -60,7 +60,8 @@
 (when (require 'helm nil t)
   (ido-mode -1)
   (helm-mode)
-  (global-set-key (kbd "C-x b") 'helm-mini))
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files))
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
