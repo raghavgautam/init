@@ -43,13 +43,14 @@
 	    (write-file pkg-file nil)
 	    (kill-buffer (current-buffer))))))))
 
-(when (and (>= emacs-major-version 23) (not (bound-and-true-p laptop))  (require 'package nil 'noerror))
+(when (and (>= emacs-major-version 23) (not (bound-and-true-p laptop))  (require 'package nil t))
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   (unless (require 'tramp-hdfs nil t)
     (ignore-errors
       (package-refresh-contents)
+      (package-initialize)
       (package-install 'helm)
       (package-install 'helm-jstack)
       (package-install 'helm-wordnet)
