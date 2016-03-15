@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-#tmux new-session -s "storm-hb24" -n gateway \; send-keys "ssh storm-hb24-ssh.cloudapp.net" C-m \; neww -n "storm-hb24" \; send-keys "ssh storm-hb24-ssh.cloudapp.net" C-m "echo def" \; next-window
+#creates and runs a command that looks like
+#tmux new-session -n mymachine \; neww -n 'host1' \; send-keys 'ssh host1' C-m 'vim' C-m \; next-window
 ssh_opt=${ssh_opt:-"-o StrictHostKeyChecking=no"}
 
 [[ -n $1 ]] || {
-    echo "usage: $0 <all_hosts file>";
+    echo "usage: bash <(curl -sSL git.io/v2Qrz) <all_hosts file>";
     cat <<"EOF"
 launches a tmux with multiple windows
   each window does ssh to a host
