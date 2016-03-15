@@ -47,14 +47,14 @@
   (message "loading package manager stuff")
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (unless (ignore-errors (require 'tramp-hdfs))
+  (unless (require 'tramp-hdfs nil t)
     (ignore-errors
       (package-refresh-contents)
-      (package-install 'tramp-hdfs)
-      (package-install 'osx-lib)
       (package-install 'helm)
       (package-install 'helm-jstack)
-      (package-install 'helm-wordnet))))
+      (package-install 'helm-wordnet)
+      (package-install 'tramp-hdfs)
+      (package-install 'osx-lib))))
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
