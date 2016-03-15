@@ -57,6 +57,11 @@
       (package-install 'tramp-hdfs)
       (package-install 'osx-lib))))
 
+(when (require 'helm nil t)
+  (ido-mode -1)
+  (helm-mode)
+  (global-set-key (kbd "C-x b") 'helm-mini))
+
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
 (setq dired-auto-revert-buffer t)
