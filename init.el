@@ -57,11 +57,23 @@
       (package-install 'tramp-hdfs)
       (package-install 'osx-lib))))
 
-(when (require 'helm nil t)
+(defun rkg-keys ()
+  (interactive)
+  (require 'helm nil t)
   (ido-mode -1)
-  (helm-mode)
+  (helm-mode 1)
   (global-set-key (kbd "C-x b") 'helm-mini)
   (global-set-key (kbd "C-x C-f") 'helm-find-files))
+
+(defun default-keys ()
+  (interactive)
+  (require 'ido)
+  (ido-mode 1)
+  (helm-mode -1)
+  (global-set-key (kbd "C-x b") 'switch-to-buffer)
+  (global-set-key (kbd "C-x C-f") 'find-file))
+
+(rkg-keys)
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
