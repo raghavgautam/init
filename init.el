@@ -78,7 +78,8 @@
   (global-set-key (kbd "C-x b") 'switch-to-buffer)
   (global-set-key (kbd "C-x C-f") 'find-file))
 
-(rkg-keys)
+(unless (bound-and-true-p laptop)
+  (default-keys))
 
 (add-hook 'fr-mode-hook 'auto-revert-mode)
 (setq auto-mode-alist (cons '("\\.log$" . auto-revert-tail-mode) auto-mode-alist))
