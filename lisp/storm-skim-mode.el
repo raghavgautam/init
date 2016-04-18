@@ -14,8 +14,47 @@
   "Regex for important log messages.")
 (defvar skim-odd-record-regex "Traceback (most recent call last)\\|Exception" "Regex for determining odd stuff.")
 
-
 (defvar storm-skim-map (make-sparse-keymap) "skim-mode keymap")
+
+
+(defun mad-button-kafka-action (button)
+  (interactive)
+  (let* ((hint (button-get button 'search-hint))
+	 ;;(all-properties (text-properties-at (button-start button)))
+	 ;;(build-url (get-text-property (button-start button) 'build-url))
+	 (file (projectile-completing-read
+		"Find file: "
+		(projectile-current-project-files)
+		hint)))
+    (find-file (expand-file-name file (projectile-project-root)))))
+
+(defun mad-button-kafka-echo (window object position)
+  (concat "Open file for: " (button-get (button-at position) 'full-text)))
+
+(define-button-type 'mad-button-kafka
+  'follow-link t
+  'action 'mad-button-kafka-action
+  'help-echo 'mad-button-kafka-echo)
+
+(defun mad-link-kafka ()
+  (interactive)
+  (save-excursion
+    (goto-char 200)
+    (remove-overlays)
+    (while (re-search-forward "/usr/hdp/current/kafka\\-broker/system_test/\\([^ '\n]*\\)" nil t)
+      (let* ((start (match-beginning 0))
+	     (end (match-end 0))
+	     (text (match-string-no-properties 1))
+	     (full-text (match-string-no-properties 0))
+	     (ov (make-overlay start end)))
+	;;(overlay-put ov 'display (concat ":system_test" text))
+	;;(overlay-put ov )
+	(make-button start end
+		     :type 'mad-button-kafka
+		     'follow-link t
+		     ;;'face nil
+		     'search-hint text
+		     'full-text full-text)))))
 
 (defun add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
   (let ((next-function (intern (format "storm-skim-next-%s" function-name-suffix)))
@@ -46,24 +85,6 @@
 (add-regex-search 'request    "Go to %s request."  skim-request-str "r")
 (add-regex-search 'record     "Go to %s record" skim-record-regex "g")
 (add-regex-search 'record     "Go to %s odd record" skim-odd-record-regex "o")
-
-(defun skim-annotate-start-end ()
-  "put fringe marker at start and end of test"
-  (interactive)
-  (remove-overlays)
-  (let ((skim-start-endregex
-	 (regexp-opt
-	  '("Testing going to start for"
-	    "Testing going to end for")
-	  t)))
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward skim-start-endregex nil t)
-	(let ((overlay (make-overlay (- (point) 5) (point))))
-	  (overlay-put overlay 'before-string (propertize "A"
-							  'display '(left-fringe left-triangle))))
-	(let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-	  (overlay-put overlay 'face 'hi-blue))))))
 
 (defun skim-annotate-failed ()
   "put fringe marker on failed tests"
@@ -123,17 +144,16 @@
 	    (overlay-put overlay 'before-string (propertize "A"
 							    'display '(left-fringe left-triangle))))
 	  (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-	    (overlay-put overlay 'face 'hi-blue)))))))
+	    (overlay-put overlay 'face 'hi-green)))))))
 
 (defun storm-skim-annotate-all ()
   "apply all the skim annotations on the log files"
   (interactive)
   (require 'hi-lock)
-  (skim-annotate-start-end)
-  (skim-annotate-failed)
+  (storm-skim-annotate-extra)
   (storm-skim-annotate-more)
   (storm-skim-test-start-end-annotate)
-  (storm-skim-annotate-extra))
+  (skim-annotate-failed))
 
 (defun skim-select-record ()
   "put fringe marker on failed tests"
@@ -154,12 +174,11 @@
   (progn
     (re-search-backward storm-skim-begin-str)
     (move-beginning-of-line nil)
-    (transient-mark-mode 1)                                                                                                                                                        
-    (set-mark (point))                                                                                                                                                             
+    (transient-mark-mode 1)
+    (set-mark (point))
     (re-search-forward storm-skim-end-str)
     (move-beginning-of-line nil)
-    (forward-line)
-    ))
+    (forward-line)))
 
 (define-key storm-skim-map (kbd "M-n M-l") 'goto-next-link)
 (define-key storm-skim-map (kbd "M-p M-l") 'goto-prev-link)
@@ -180,7 +199,8 @@
         ;;(,mylsl-functions-regexp . font-lock-function-name-face)
         ;;(,mylsl-keywords-regexp . font-lock-keyword-face)
         ))
-;;define-minor-mode 
+;;define-minor-mode
+;;http://emacs.stackexchange.com/questions/10165/can-i-add-highlighting-in-a-minor-mode
 (define-derived-mode ead-mode nil " EAD"
   "Emacs assisted debugging."
   ;;(use-local-map storm-skim-map)

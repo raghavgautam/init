@@ -8,11 +8,6 @@
 (defvar skim-skip-str2 "]) ----- Status: SKIPPED" "String for searching skipped")
 (defvar skim-request-str "Request Url: " "String for determining falcon request")
 (defvar skim-record-regex "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)" "Regex for determining begining of a log record")
-
-(defvar storm-test-start-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?RUNNING TEST .*? at location .*? at line number .*?\\)")
-(defvar storm-test-end-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? FAILED in .*? seconds\\)")
-(defvar storm-test-fail-regex "\\(20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9].*?TEST .*? in .*? seconds\\)")
-
 (defvar skim-map (make-sparse-keymap) "skim-mode keymap")
 
 (defun add-regex-search (function-name-suffix doc-template regex &optional kbd-postfix)
@@ -112,21 +107,6 @@
   (skim-annotate-failed)
   (skim-annotate-more)
   (skim-annotate-extra))
-
-(defun skim-annotate-storm ()
-  "Storm specific annotations."
-  (interactive)
-  (save-excursion
-    (-each
-	(list storm-test-start-regex storm-test-end-regex)
-      (lambda (x)
-	(goto-char (point-min))
-	(while (re-search-forward x nil t)
-	  (let ((overlay (make-overlay (- (point) 5) (point))))
-	    (overlay-put overlay 'before-string (propertize "A"
-							    'display '(left-fringe left-triangle))))
-	  (let ((overlay (make-overlay (line-beginning-position) (line-end-position))))
-	    (overlay-put overlay 'face 'hi-blue)))))))
 
 (setq skim-record-regex
       "\\(?:20[1-5][0-9]-[01][0-9]-[0-3][0-9] [0-2][0-9]:[0-5][0-9]:[0-5][0-9],[0-9][0-9][0-9]\\)")
