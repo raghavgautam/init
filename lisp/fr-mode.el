@@ -114,7 +114,7 @@
   (fr-run-cmd command setup-buf))
 
 (when (bound-and-true-p laptop)
-  (require 'projectile))
+  (use-package projectile :ensure))
 
 (defun fr-find-file-in-project (hint)
   (let ((file (projectile-completing-read
