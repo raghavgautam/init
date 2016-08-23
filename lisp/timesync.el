@@ -2,11 +2,14 @@
 
 ;;(benchmark-run-compiled 40000 (date-to-time "2014-10-12 11:11:11"))
 
-(defun date-of-log (log-line)
+(defun date-of-log (&optional log-line)
+  (interactive)
+  (unless log-line
+    (setq log-line (thing-at-point 'line)))
   (let* ((dt-part (substring log-line 0 (min 30 (length log-line)))))
     (ignore-errors (let ((date (date-to-time dt-part)))
-		     (if (equal date bogus-date) nil
-		       date)))))
+                     (if (equal date bogus-date) nil
+                       date)))))
 
 (defun buffer-timesync (&optional buff)
   "Time sync current buffer with another one" 
