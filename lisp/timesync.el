@@ -117,30 +117,28 @@
     (should (equal (binary-search-pos [10 20 30 40 50] 60) 4)))
   (ert-deftest date-of-log-test ()
     (should (equal (date-of-log (concat "[2016-06-29 09:08:02,358] INFO Audit Status Log: name=kafka.async.summary.multi_dest.batch.hdfs, interval=01:00.005 minutes, events=24, succcessCount=24, totalEvents=404, totalSuccessCount=404 (org.apache.ranger.audit.provider.BaseAuditHandler)\n"
-					"  PID TTY          TIME CMD\n"
-					" 1737 ?        00:00:02 python2.6"))
-		   '(22387 62050)))
+                                        "  PID TTY          TIME CMD\n"
+                                        " 1737 ?        00:00:02 python2.6"))
+                   '(22387 62050)))
     (should (equal (date-of-log (concat "[2016-06-29 09:08:02,359] INFO Audit Status Log: name=kafka.async.summary.multi_dest.batch.hdfs, interval=01:00.005 minutes, events=24, succcessCount=24, totalEvents=404, totalSuccessCount=404 (org.apache.ranger.audit.provider.BaseAuditHandler)\n"
-					"  PID TTY          TIME CMD\n"
-					" 1737 ?        00:00:02 python2.6"))
-		   '(22387 62050)))
+                                        "  PID TTY          TIME CMD\n"
+                                        " 1737 ?        00:00:02 python2.6"))
+                   '(22387 62050)))
     (should (equal (date-of-log (concat "[2016-06-29 09:08:12,358] INFO Audit Status Log: name=kafka.async.summary.multi_dest.batch.hdfs, interval=01:00.005 minutes, events=24, succcessCount=24, totalEvents=404, totalSuccessCount=404 (org.apache.ranger.audit.provider.BaseAuditHandler)\n"
-					"  PID TTY          TIME CMD\n"
-					" 1737 ?        00:00:02 python2.6"))
-		   '(22387 62060))))
+                                        "  PID TTY          TIME CMD\n"
+                                        " 1737 ?        00:00:02 python2.6"))
+                   '(22387 62060))))
   (ert-deftest binary-search-log-test-regex ()
     (let ((regex (concat
-		  "^"
-		  "[[:digit:]]\\{4\\}.[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}" ;; year month day
-		  "."
-		  "[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}" ;; hour minute second
-		  "."
-		  "[[:digit:]]\\{3\\}" ;; milli-second
-		  )))
+                  "^"
+                  "[[:digit:]]\\{4\\}.[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}" ;; year month day
+                  "."
+                  "[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}.[[:digit:]]\\{2\\}" ;; hour minute second
+                  "."
+                  "[[:digit:]]\\{3\\}" ;; milli-second
+                  )))
       (should (string-match-p regex "2016-06-29 09:08:12,348"))
-      (should (not (string-match-p regex "non016-06-29 09:08:12,348")))
-      ))
-  (ert "binary-search-*\\|timesync*\\|date-of-log*" ))
+      (should (not (string-match-p regex "non016-06-29 09:08:12,348"))))))
+
 
 (provide 'timesync)
-
