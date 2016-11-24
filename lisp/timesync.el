@@ -140,5 +140,30 @@
       (should (string-match-p regex "2016-06-29 09:08:12,348"))
       (should (not (string-match-p regex "non016-06-29 09:08:12,348"))))))
 
+;;(ert "binary-search-*\\|timesync*\\|date-of-log*" )
+
+(defun blank-function ()
+  (length
+   (let* ((search-date-str "2016-06-30 11:46:03,773abcabc")
+          (search-date (date-of-log search-date-str))
+          (date-pos-rev-list (with-current-buffer "console.log"
+                               (goto-char (point-min))
+                               (let ((date-pos-tlist nil))
+                                 (while (< (point) (point-max))
+                                   (let ((log-date (timesync-log-date)))
+                                     (when log-date 
+                                       (setq date-pos-tlist (cons (cons log-date (point)) date-pos-tlist))))
+                                   (forward-line))
+                                 date-pos-tlist)))
+          date-pos-flist)
+     (setq date-pos-flist (first date-pos-rev-list))	 
+     (while date-pos-rev-list
+       (let ((elem-date (car date-pos-rev-list))
+             (next-elem-date (car (second date-pos-rev-list))))
+         (if (< next-elem-date elem-date)
+             (list (second date-pos-rev-list) elem-date))
+         (setq date-pos-rev-list (rest date-pos-rev-list))))
+     date-pos-flist))
+  )
 
 (provide 'timesync)
