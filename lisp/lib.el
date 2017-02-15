@@ -31,7 +31,7 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
      )
 (defun find-in-file (file-name regex num)
   "Find content in a FILE-NAME by REGEX & NUM."
-  (unless (file-regular-p path file-name)
+  (unless (file-regular-p file-name)
     (user-error "Supplied filename is not a file: %s" file-name))
   (save-window-excursion
     (with-current-buffer (find-file file-name)
@@ -39,6 +39,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (re-search-forward regex)
       (match-string-no-properties num))))
 
+(defmacro unbound-p (var)
+  "Return t if VAR is unbound, else nil."
+  `(not (boundp (quote ,var))))
 
 ;;(get-line-number-file)
 
