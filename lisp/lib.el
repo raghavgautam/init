@@ -26,14 +26,14 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (defun robot-input ()
   (run-cmd-get-output  "log-robot"
-		       "--command"
-		       "get-robot-input"
-		       "--file"
-		       (buffer-file-name)
-		       "--line"
-		       (get-line-number-file)
-		       "--column"
-		       (number-to-string (current-column))))
+                       "--command"
+                       "get-robot-input"
+                       "--file"
+                       (buffer-file-name)
+                       "--line"
+                       (get-line-number-file)
+                       "--column"
+                       (number-to-string (current-column))))
 
 (defun robot-record-feedback (feedback)
   (run-cmd-get-output  "log-robot"
