@@ -18,9 +18,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (defun get-line-number-file ()
   "Get line number of the in file."
   (number-to-string (save-excursion
-		      (save-restriction
-			(widen)
-			(line-number-at-pos)))))
+                      (save-restriction
+                        (widen)
+                        (line-number-at-pos)))))
 
 ;;(get-line-number-file)
 
@@ -37,16 +37,16 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 
 (defun robot-record-feedback (feedback)
   (run-cmd-get-output  "log-robot"
-		       "--command"
-		       "record-user-feedback"
-		       "--file"
-		       (buffer-file-name)
-		       "--line"
-		       (get-line-number-file)
-		       "--column"
-		       (number-to-string (current-column))
-		       "--feedback"
-		       feedback))
+                       "--command"
+                       "record-user-feedback"
+                       "--file"
+                       (buffer-file-name)
+                       "--line"
+                       (get-line-number-file)
+                       "--column"
+                       (number-to-string (current-column))
+                       "--feedback"
+                       feedback))
 (defun ask-user ()
   (interactive)
   "Ask user for bug confirmation"
