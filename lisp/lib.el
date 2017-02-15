@@ -22,6 +22,13 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
                         (widen)
                         (line-number-at-pos)))))
 
+(and nil
+     (let ((r "\\(?:a\\)\\(BC\\)\\(?:d\\)")
+           (s "_aBCd_")
+           (pos 1))
+       (string-match r s)
+       (match-string pos s))
+     )
 (defun find-in-file (file-name regex num)
   "Find content in a FILE-NAME by REGEX & NUM."
   (unless (file-regular-p path file-name)
