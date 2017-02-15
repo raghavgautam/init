@@ -22,6 +22,17 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
                         (widen)
                         (line-number-at-pos)))))
 
+(defun find-in-file (file-name regex num)
+  "Find content in a FILE-NAME by REGEX & NUM."
+  (unless (file-regular-p path file-name)
+    (user-error "Supplied filename is not a file: %s" file-name))
+  (save-window-excursion
+    (with-current-buffer (find-file file-name)
+      (goto-char (point-min))
+      (re-search-forward regex)
+      (match-string-no-properties num))))
+
+
 ;;(get-line-number-file)
 
 (defun robot-input ()
