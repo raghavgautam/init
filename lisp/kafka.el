@@ -62,7 +62,7 @@
                        (concat (expand-file-name "kafka-console-consumer.sh" (kafka.bin.dir.get)) " --bootstrap-server " (kafka.broker.get) " --topic " topic " --from-beginning --timeout-ms 2000 | head")
                        'kafka.console.consumer.history))
          (compilation-ask-about-save nil)
-         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.console.consumer" topic "*"))))
+         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.console.consumer " topic "*"))))
     (compile command)))
 ;;(kafka.console.consumer)
 
