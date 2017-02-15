@@ -17,7 +17,7 @@
     (string-match r s)
     (match-string pos s))
   (when (or prefix (unbound-p kafka.broker))
-    (setq kafka.broker (find-in-file (kafka.server.props.file.get nil) "listeners *=.*://\\([^:]+:[0-9]+\\)" 1))))
+    (setq kafka.broker (find-in-file (kafka.server.props.file.get prefix) "listeners *=.*://\\([^:]+:[0-9]+\\)" 1))))
 ;;(kafka.broker.get nil)
 
 (defun kafka.server.props.file.get (&optional prefix)
@@ -36,19 +36,14 @@
   (when (or prefix (unbound-p kafka.bin.dir))
     (setq kafka.bin.dir
           (let ((default-directory "/usr/hdp/current/kafka-broker/bin"))
-            (read-directory-name "Enter file name:"))))
+            (read-directory-name "Enter directory for kafka binaries:"))))
   kafka.bin.dir)
 ;;(kafka.bin.dir.get)
 (defun kafka.broker.get (&optional prefix)
   "Get kafka broker, with PREFIX reset cache."
   (interactive "P")
-  (let ((r "\\(?:a\\)\\(BC\\)\\(?:d\\)")
-        (s "_aBCd_")
-        (pos 1))
-    (string-match r s)
-    (match-string pos s))
   (when (or prefix (unbound-p kafka.broker))
-    (setq kafka.broker (find-in-file (kafka.server.props.file.get nil) "listeners *=.*://\\([^:]+:[0-9]+\\)" 1)))
+    (setq kafka.broker (find-in-file (kafka.server.props.file.get prefix) "listeners *=.*://\\([^:]+:[0-9]+\\)" 1)))
   kafka.broker)
 ;;(kafka.broker.get nil)
 
