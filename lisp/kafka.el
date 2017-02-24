@@ -61,4 +61,37 @@
     (compile command)))
 ;;(kafka.console.consumer)
 
+(defun kafka.zookeeper.get (&optional prefix)
+  "Get zookeeper endpoint; with PREFIX reset cache."
+  (interactive "P")
+  (when (or prefix (unbound-p kafka.zookeeper))
+    (setq kafka.zookeeper (find-in-file (kafka.server.props.file.get prefix) "zookeeper.connect *= *\\(.+\\)" 1)))
+  kafka.zookeeper)
+;;(kafka.zookeeper.get nil)
+
+(defun kafka.topic.list ()
+  "List kafka topics"
+  (interactive)
+  (let* ((command
+          (read-string "Run command: "
+                       (concat (expand-file-name "kafka-topics.sh" (kafka.bin.dir.get)) " --zookeeper " (kafka.zookeeper.get) " --list ")
+                       'kafka.topic.list.history))
+         (compilation-ask-about-save nil)
+         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topic.list*"))))
+    (compile command)))
+;;(kafka.topic.list)
+
+(defun kafka.topic.create ()
+  "Create a kafka topic."
+  (interactive)
+  (let* ((topic (or (thing-at-point 'symbol)
+                    (read-string "Name of the topic to create: ")))
+         (command
+          (read-string "Run command: "
+                       (concat (expand-file-name "kafka-topics.sh" (kafka.bin.dir.get)) " --zookeeper " (kafka.zookeeper.get) " --create --topic " topic " --replication-factor 1 --partitions 5")
+                       'kafka.topic.create.history))
+         (compilation-ask-about-save nil)
+         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topics.list*"))))
+    (compile command)))
+;;(kafka.topic.create)
 (provide 'kafka)
