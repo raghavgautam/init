@@ -74,7 +74,7 @@
   (interactive)
   (require 'ido)
   (ido-mode 1)
-  (helm-mode -1)
+  (ignore-errors (helm-mode -1))
   (global-set-key (kbd "C-x b") 'switch-to-buffer)
   (global-set-key (kbd "C-x C-f") 'find-file))
 
