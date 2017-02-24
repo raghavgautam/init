@@ -27,7 +27,7 @@
   (when (or prefix (unbound-p kafka.server.props.file))
     (setq kafka.server.props.file
           (let ((default-directory "/etc/kafka"))
-            (read-file-name "Enter file name:"))))
+            (read-file-name "Enter location of kafka's server.properties file:"))))
   kafka.server.props.file)
 ;;(kafka.server.props.file.get)
 
