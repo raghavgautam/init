@@ -1,3 +1,4 @@
+(require 'lib)
 (defun kafka.server.props.file.get (&optional prefix)
   "Get kafka.server.props.file optionally setting it. Use PREFIX arg force setting it."
   (interactive "P")
@@ -91,7 +92,7 @@
                        (concat (expand-file-name "kafka-topics.sh" (kafka.bin.dir.get)) " --zookeeper " (kafka.zookeeper.get) " --create --topic " topic " --replication-factor 1 --partitions 5")
                        'kafka.topic.create.history))
          (compilation-ask-about-save nil)
-         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topics.list*"))))
+         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topic.create*"))))
     (compile command)))
 ;;(kafka.topic.create)
 (provide 'kafka)
