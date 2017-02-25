@@ -56,10 +56,8 @@
          (command
           (read-string "Run command: "
                        (concat (expand-file-name "kafka-console-consumer.sh" (kafka.bin.dir.get)) " --bootstrap-server " (kafka.broker.get) " --topic " topic " --from-beginning --timeout-ms 2000 | head")
-                       'kafka.console.consumer.history))
-         (compilation-ask-about-save nil)
-         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.console.consumer " topic "*"))))
-    (compile command)))
+                       'kafka.console.consumer.history)))
+    (compile-in-buffer command (concat "*kafka.console.consumer " topic "*"))))
 ;;(kafka.console.consumer)
 
 (defun kafka.zookeeper.get (&optional prefix)
@@ -76,10 +74,8 @@
   (let* ((command
           (read-string "Run command: "
                        (concat (expand-file-name "kafka-topics.sh" (kafka.bin.dir.get)) " --zookeeper " (kafka.zookeeper.get) " --list ")
-                       'kafka.topic.list.history))
-         (compilation-ask-about-save nil)
-         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topic.list*"))))
-    (compile command)))
+                       'kafka.topic.list.history)))
+    (compile-in-buffer command "*kafka.topic.list*")))
 ;;(kafka.topic.list)
 
 (defun kafka.topic.create ()
@@ -90,9 +86,7 @@
          (command
           (read-string "Run command: "
                        (concat (expand-file-name "kafka-topics.sh" (kafka.bin.dir.get)) " --zookeeper " (kafka.zookeeper.get) " --create --topic " topic " --replication-factor 1 --partitions 5")
-                       'kafka.topic.create.history))
-         (compilation-ask-about-save nil)
-         (compilation-buffer-name-function (lambda (ignore) (concat "*kafka.topic.create*"))))
-    (compile command)))
+                       'kafka.topic.create.history)))
+    (compile-in-buffer command "*kafka.topic.create*")))
 ;;(kafka.topic.create)
 (provide 'kafka)
