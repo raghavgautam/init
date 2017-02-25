@@ -97,6 +97,23 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
       (message retval)
       retval
       )))
+
+(defun compile-in-buffer (command buffer-name)
+  "Run compile command in given buffer."
+  (let ((compilation-ask-about-save nil)
+        (compilation-buffer-name-function (lambda (ignore) buffer-name)))
+    (compile command)))
+
+(defun curl (url)
+  "Fire a curl call for the given URL."
+  (interactive
+   (list (read-from-minibuffer "URL: " (thing-at-point 'url))))
+  ;;curl -sSL --negotiate -u : https://github.com
+  (let* ((command
+          (read-string "Run command: "
+                       (concat "curl -sSL --negotiate -u : " url)
+                       'curl.history)))
+    (compile-in-buffer command (concat "*" "curl " url "*"))))
 ;;(my-url-decoder "http://ip-172-31-35-204.ec2.internal:15000/api/instance/list/process/agregator-coord16-02b73cdc?start=2014-10-31T23%3A18Z&end=2014-10-31T23%3A44Z&filterBy=status%3ARUNNING&user.name=hrt_qa")
 
 (defun read-lines (filePath)
