@@ -88,12 +88,12 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (interactive
    (list (read-from-minibuffer "URL: " (thing-at-point 'url))))
   (let* ((temp1 (split-string (url-unhex-string url) "?"))
-	 (retval (car temp1))
-	 (args (split-string (cadr temp1) "&")))
+         (retval (car temp1))
+         (args (split-string (cadr temp1) "&")))
     (progn
       (while args
-	(setq retval (concat retval "\n" (car args)))
-	(setq args (cdr args)))
+        (setq retval (concat retval "\n" (car args)))
+        (setq args (cdr args)))
       (message retval)
       retval
       )))
