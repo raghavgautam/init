@@ -84,9 +84,9 @@ White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
   (message default-directory))
 
 (defun my-url-decoder (url)
+  "Decode a url and show it params and parts"
   (interactive
    (list (read-from-minibuffer "URL: " (thing-at-point 'url))))
-  "Decode a url and show it params and parts"
   (let* ((temp1 (split-string (url-unhex-string url) "?"))
 	 (retval (car temp1))
 	 (args (split-string (cadr temp1) "&")))
