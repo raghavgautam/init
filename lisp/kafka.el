@@ -53,6 +53,7 @@
   (interactive)
   (let* ((topic (or (thing-at-point 'symbol)
                     (read-string "Name of the topic for console consumer: ")))
+	 ;;./kafka-console-consumer.sh --bootstrap-server node-000002.hwx.site:6667 --topic topic-abc --new-consumer --security-protocol SASL_PLAINTEXT --timeout-ms 2000 --from-beginning
          (command
           (read-string "Run command: "
                        (concat (expand-file-name "kafka-console-consumer.sh" (kafka.bin.dir.get)) " --bootstrap-server " (kafka.broker.get) " --topic " topic " --from-beginning --timeout-ms 2000 | head")
