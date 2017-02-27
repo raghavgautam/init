@@ -44,9 +44,15 @@
   "Get kafka broker, with PREFIX reset cache."
   (interactive "P")
   (when (or prefix (unbound-p kafka.broker))
-    (setq kafka.broker (find-in-file (kafka.server.props.file.get prefix) "listeners *=.*://\\([^:]+:[0-9]+\\)" 1)))
+    (setq kafka.broker (find-in-file (kafka.server.props.file.get prefix) "listeners *=.*?://\\([^:]+:[0-9]+\\)" 1)))
   kafka.broker)
-;;(kafka.broker.get nil)
+;;(kafka.broker.get t)
+
+(defun kafka.security.protocol.get (&optional prefix)
+  "Get kafka security protocol."
+  (interactive "P")
+  (find-in-file (kafka.server.props.file.get prefix) "listeners *= *\\([^:]+\\):" 1))
+;;(kafka.security.protocol.get)
 
 (defun kafka.console.consumer ()
   "Run kafka console consumer command with right args."
@@ -56,7 +62,7 @@
 	 ;;./kafka-console-consumer.sh --bootstrap-server node-000002.hwx.site:6667 --topic topic-abc --new-consumer --security-protocol SASL_PLAINTEXT --timeout-ms 2000 --from-beginning
          (command
           (read-string "Run command: "
-                       (concat (expand-file-name "kafka-console-consumer.sh" (kafka.bin.dir.get)) " --bootstrap-server " (kafka.broker.get) " --topic " topic " --from-beginning --timeout-ms 2000 | head")
+                       (concat (expand-file-name "kafka-console-consumer.sh" (kafka.bin.dir.get)) " --bootstrap-server " (kafka.broker.get) " --topic " topic " --new-consumer --security-protocol " (kafka.security.protocol.get) " --from-beginning --timeout-ms 2000 | head")
                        'kafka.console.consumer.history)))
     (compile-in-buffer command (concat "*kafka.console.consumer " topic "*"))))
 ;;(kafka.console.consumer)
