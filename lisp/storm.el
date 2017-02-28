@@ -19,12 +19,27 @@
 
 ;;/usr/hdp/current/storm-client/bin/storm -c java.security.auth.login.config=/etc/storm/conf/client_jaas.conf -c storm.thrift.transport=org.apache.storm.security.auth.kerberos.KerberosSaslTransportPlugin -c client.jartransformer.class=nil list
 (defun storm.list ()
-  "List storm topologies."  
+  "List storm topologies."
+  (interactive)
   (let* ((storm-bin "storm")
-	 (command (concat
-		   storm-bin
-		   (when (storm.secure-p) " -c java.security.auth.login.config=/etc/storm/conf/client_jaas.conf -c storm.thrift.transport=org.apache.storm.security.auth.kerberos.KerberosSaslTransportPlugin")
-		   " -c client.jartransformer.class=nil"
-		   " list")))
-    command))
+         (command (concat
+                   storm-bin
+                   (when (storm.secure-p) " -c java.security.auth.login.config=/etc/storm/conf/client_jaas.conf -c storm.thrift.transport=org.apache.storm.security.auth.kerberos.KerberosSaslTransportPlugin")
+                   " -c client.jartransformer.class=nil"
+                   " list")))
+    (compile-in-buffer command "*storm.list*")))
 ;;(storm.list)
+
+(defun storm.kill ()
+  "Kill a storm topology."
+  (interactive)
+  (let* ((storm-bin "storm")
+         (topo-name (read-string "Name of the topic for console consumer: " (thing-at-point 'symbol)))
+         (command (concat
+                   storm-bin
+                   (when (storm.secure-p) " -c java.security.auth.login.config=/etc/storm/conf/client_jaas.conf -c storm.thrift.transport=org.apache.storm.security.auth.kerberos.KerberosSaslTransportPlugin")
+                   " -c client.jartransformer.class=nil"
+                   " kill " topo-name)))
+    (compile-in-buffer command "*storm.kill*")))
+
+(provide 'storm)
