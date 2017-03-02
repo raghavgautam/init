@@ -315,3 +315,4 @@
 (require 'storm-skim-mode)
 (require 'timesync)
 (require 'kafka)
+(require 'storm)
